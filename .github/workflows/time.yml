@@ -1,0 +1,49 @@
+name: Timing
+
+on:
+  schedule:
+    - cron: 0 */6 * * *
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: gogogo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Credentials
+        - run: |
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+        
+      - name: Setup Python 3.8.6
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8.6
+          architecture: 'x64'
+
+      - name: Get pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+  
+      - name: pip cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('**/setup.py') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+            ${{ runner.os }}-pip-
+      - name: Install
+        run: |
+          pip install wheel
+          pip install matplotlib==3.3.4
+      - name: Run examples
+        run: |
+          python gogogo.py
+          git add data/*
+          git commit -am "more-times-mpl:3.3.4-py:3.8.6"
+          git push
