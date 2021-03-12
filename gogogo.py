@@ -15,14 +15,14 @@ filterwarnings(
 
 import matplotlib.pyplot as plt
 import glob
-import time
+import time as _time # apparently at least one example redefines this
 
 files = glob.glob("examples/**/*.py")
 times = []
 for f in files:
-    start = time.time()
+    start = _time.time()
     exec(open(f).read())
-    end = time.time()
+    end = _time.time()
     times.append(end - start)
     plt.close("all")
 from datetime import datetime
@@ -39,3 +39,4 @@ with open(now, "w") as f:
     f.write("# " + platform.platform() + "\n")
     for fname, time in zip(files, times):
         f.write(f"{fname}, {time}\n")
+
