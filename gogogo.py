@@ -17,17 +17,17 @@ import matplotlib.pyplot as plt
 import glob
 import time as _time # apparently at least one example redefines this
 
-files = glob.glob("examples/**/*.py")
-times = []
+_files = glob.glob("examples/**/*.py")
+_times = []
 garbo = []
-for f in files:
-    start = _time.time()
+for _f in _files:
+    _start = _time.time()
     try:
-        exec(open(f).read())
+        exec(open(_f).read())
     except:
-        garbo.append(f)
-    end = _time.time()
-    times.append(end - start)
+        garbo.append(_f)
+    _end = _time.time()
+    _times.append(_end - _start)
     plt.close("all")
 from datetime import datetime
 
