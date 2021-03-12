@@ -42,8 +42,8 @@ jobs:
       - name: Install
         run: |
           pip install wheel
+          pip install scipy==1.6.0 numpy==1.20.0
           pip install matplotlib==3.3.4
-          pip install scipy
       - name: Run examples
         run: |
           python gogogo.py
