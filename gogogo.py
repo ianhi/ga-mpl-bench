@@ -19,6 +19,7 @@ import time as _time # apparently at least one example redefines this
 
 _files = glob.glob("examples/**/*.py")
 _times = []
+_working = []
 garbo = []
 for _f in _files:
     _start = _time.time()
@@ -26,7 +27,9 @@ for _f in _files:
         exec(open(_f).read())
     except:
         garbo.append(_f)
+        continue
     _end = _time.time()
+    _working.append(_f)
     _times.append(_end - _start)
     plt.close("all")
 from datetime import datetime
@@ -41,7 +44,7 @@ with open(now, "w") as f:
     for l in sys.version.splitlines():
         f.write("# " + l + "\n")
     f.write("# " + platform.platform() + "\n")
-    for fname, time in zip(files, times):
+    for fname, time in zip(_working, _times):
         f.write(f"{fname}, {time}\n")
 
 print(garbo)
