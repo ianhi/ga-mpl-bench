@@ -21,11 +21,7 @@ files = glob.glob("examples/**/*.py")
 times = []
 for f in files:
     start = time.time()
-    try:
-        exec(open(f).read())
-    except:
-        print(f)
-        continue
+    exec(open(f).read())
     end = time.time()
     times.append(end - start)
     plt.close("all")
