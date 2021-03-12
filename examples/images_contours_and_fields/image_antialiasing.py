@@ -25,10 +25,10 @@ x = np.arange(500) / 500 - 0.5
 y = np.arange(500) / 500 - 0.5
 
 X, Y = np.meshgrid(x, y)
-R = np.sqrt(X ** 2 + Y ** 2)
+R = np.sqrt(X**2 + Y**2)
 f0 = 10
 k = 250
-a = np.sin(np.pi * 2 * (f0 * R + k * R ** 2 / 2))
+a = np.sin(np.pi * 2 * (f0 * R + k * R**2 / 2))
 
 
 ###############################################################################
@@ -37,8 +37,8 @@ a = np.sin(np.pi * 2 * (f0 * R + k * R ** 2 / 2))
 # high-frequency data being subsampled.  The 'antialiased' image
 # still has some Moire patterns as well, but they are greatly reduced.
 fig, axs = plt.subplots(1, 2, figsize=(7, 4), constrained_layout=True)
-for ax, interp in zip(axs, ["nearest", "antialiased"]):
-    ax.imshow(a, interpolation=interp, cmap="gray")
+for ax, interp in zip(axs, ['nearest', 'antialiased']):
+    ax.imshow(a, interpolation=interp, cmap='gray')
     ax.set_title(f"interpolation='{interp}'")
 plt.show()
 
@@ -51,14 +51,14 @@ plt.show()
 # neighboring line of pixels and thus stretch the image locally so that it
 # looks distorted.
 fig, ax = plt.subplots(figsize=(6.8, 6.8))
-ax.imshow(a, interpolation="nearest", cmap="gray")
+ax.imshow(a, interpolation='nearest', cmap='gray')
 ax.set_title("upsampled by factor a 1.048, interpolation='nearest'")
 plt.show()
 
 ###############################################################################
 # Better antialiasing algorithms can reduce this effect:
 fig, ax = plt.subplots(figsize=(6.8, 6.8))
-ax.imshow(a, interpolation="antialiased", cmap="gray")
+ax.imshow(a, interpolation='antialiased', cmap='gray')
 ax.set_title("upsampled by factor a 1.048, interpolation='antialiased'")
 plt.show()
 
@@ -67,8 +67,8 @@ plt.show()
 # number of different interpolation algorithms, which may work better or
 # worse depending on the pattern.
 fig, axs = plt.subplots(1, 2, figsize=(7, 4), constrained_layout=True)
-for ax, interp in zip(axs, ["hanning", "lanczos"]):
-    ax.imshow(a, interpolation=interp, cmap="gray")
+for ax, interp in zip(axs, ['hanning', 'lanczos']):
+    ax.imshow(a, interpolation=interp, cmap='gray')
     ax.set_title(f"interpolation='{interp}'")
 plt.show()
 
@@ -84,5 +84,4 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.imshow

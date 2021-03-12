@@ -15,7 +15,8 @@ from matplotlib.transforms import Bbox, TransformedBbox, BboxTransformTo
 
 class RibbonBox:
 
-    original_image = plt.imread(cbook.get_sample_data("Minduka_Present_Blue_Pack.png"))
+    original_image = plt.imread(
+        cbook.get_sample_data("Minduka_Present_Blue_Pack.png"))
     cut_location = 70
     b_and_h = original_image[:, :, 2:3]
     color = original_image[:, :, 2:3] - original_image[:, :, 0:1]
@@ -25,20 +26,17 @@ class RibbonBox:
     def __init__(self, color):
         rgb = mcolors.to_rgba(color)[:3]
         self.im = np.dstack(
-            [self.b_and_h - self.color * (1 - np.array(rgb)), self.alpha]
-        )
+            [self.b_and_h - self.color * (1 - np.array(rgb)), self.alpha])
 
     def get_stretched_image(self, stretch_factor):
         stretch_factor = max(stretch_factor, 1)
         ny, nx, nch = self.im.shape
-        ny2 = int(ny * stretch_factor)
+        ny2 = int(ny*stretch_factor)
         return np.vstack(
-            [
-                self.im[: self.cut_location],
-                np.broadcast_to(self.im[self.cut_location], (ny2 - ny, nx, nch)),
-                self.im[self.cut_location :],
-            ]
-        )
+            [self.im[:self.cut_location],
+             np.broadcast_to(
+                 self.im[self.cut_location], (ny2 - ny, nx, nch)),
+             self.im[self.cut_location:]])
 
 
 class RibbonBoxImage(AxesImage):
@@ -53,7 +51,7 @@ class RibbonBoxImage(AxesImage):
     def draw(self, renderer, *args, **kwargs):
         stretch_factor = self._bbox.height / self._bbox.width
 
-        ny = int(stretch_factor * self._ribbonbox.nx)
+        ny = int(stretch_factor*self._ribbonbox.nx)
         if self.get_array() is None or self.get_array().shape[0] != ny:
             arr = self._ribbonbox.get_stretched_image(stretch_factor)
             self.set_array(arr)
@@ -75,7 +73,7 @@ def main():
     ]
 
     for year, h, bc in zip(years, heights, box_colors):
-        bbox0 = Bbox.from_extents(year - 0.4, 0.0, year + 0.4, h)
+        bbox0 = Bbox.from_extents(year - 0.4, 0., year + 0.4, h)
         bbox = TransformedBbox(bbox0, ax.transData)
         ax.add_artist(RibbonBoxImage(ax, bbox, bc, interpolation="bicubic"))
         ax.annotate(str(h), (year, h), va="bottom", ha="center")
@@ -86,14 +84,8 @@ def main():
     background_gradient = np.zeros((2, 2, 4))
     background_gradient[:, :, :3] = [1, 1, 0]
     background_gradient[:, :, 3] = [[0.1, 0.3], [0.3, 0.5]]  # alpha channel
-    ax.imshow(
-        background_gradient,
-        interpolation="bicubic",
-        zorder=0.1,
-        extent=(0, 1, 0, 1),
-        transform=ax.transAxes,
-        aspect="auto",
-    )
+    ax.imshow(background_gradient, interpolation="bicubic", zorder=0.1,
+              extent=(0, 1, 0, 1), transform=ax.transAxes, aspect="auto")
 
     plt.show()
 

@@ -16,7 +16,8 @@ import matplotlib.ticker as mticker
 from cycler import cycler
 
 
-def filled_hist(ax, edges, values, bottoms=None, orientation="v", **kwargs):
+def filled_hist(ax, edges, values, bottoms=None, orientation='v',
+                **kwargs):
     """
     Draw a histogram as a stepped patch.
 
@@ -47,19 +48,17 @@ def filled_hist(ax, edges, values, bottoms=None, orientation="v", **kwargs):
         Artist added to the Axes
     """
     print(orientation)
-    if orientation not in "hv":
-        raise ValueError(
-            "orientation must be in {{'h', 'v'}} " "not {o}".format(o=orientation)
-        )
+    if orientation not in 'hv':
+        raise ValueError("orientation must be in {{'h', 'v'}} "
+                         "not {o}".format(o=orientation))
 
-    kwargs.setdefault("step", "post")
+    kwargs.setdefault('step', 'post')
     edges = np.asarray(edges)
     values = np.asarray(values)
     if len(edges) - 1 != len(values):
-        raise ValueError(
-            "Must provide one more bin edge than value not: "
-            "len(edges): {lb} len(values): {lv}".format(lb=len(edges), lv=len(values))
-        )
+        raise ValueError('Must provide one more bin edge than value not: '
+                         'len(edges): {lb} len(values): {lv}'.format(
+                             lb=len(edges), lv=len(values)))
 
     if bottoms is None:
         bottoms = 0
@@ -67,24 +66,19 @@ def filled_hist(ax, edges, values, bottoms=None, orientation="v", **kwargs):
 
     values = np.append(values, values[-1])
     bottoms = np.append(bottoms, bottoms[-1])
-    if orientation == "h":
-        return ax.fill_betweenx(edges, values, bottoms, **kwargs)
-    elif orientation == "v":
-        return ax.fill_between(edges, values, bottoms, **kwargs)
+    if orientation == 'h':
+        return ax.fill_betweenx(edges, values, bottoms,
+                                **kwargs)
+    elif orientation == 'v':
+        return ax.fill_between(edges, values, bottoms,
+                               **kwargs)
     else:
         raise AssertionError("you should never be here")
 
 
-def stack_hist(
-    ax,
-    stacked_data,
-    sty_cycle,
-    bottoms=None,
-    hist_func=None,
-    labels=None,
-    plot_func=None,
-    plot_kwargs=None,
-):
+def stack_hist(ax, stacked_data, sty_cycle, bottoms=None,
+               hist_func=None, labels=None,
+               plot_func=None, plot_kwargs=None):
     """
     Parameters
     ----------
@@ -156,17 +150,16 @@ def stack_hist(
             labels = itertools.repeat(None)
 
     if label_data:
-        loop_iter = enumerate(
-            (stacked_data[lab], lab, s) for lab, s in zip(labels, sty_cycle)
-        )
+        loop_iter = enumerate((stacked_data[lab], lab, s)
+                              for lab, s in zip(labels, sty_cycle))
     else:
         loop_iter = enumerate(zip(stacked_data, labels, sty_cycle))
 
     arts = {}
     for j, (data, label, sty) in loop_iter:
         if label is None:
-            label = "dflt set {n}".format(n=j)
-        label = sty.pop("label", label)
+            label = 'dflt set {n}'.format(n=j)
+        label = sty.pop('label', label)
         vals, edges = hist_func(data)
         if bottoms is None:
             bottoms = np.zeros_like(vals)
@@ -174,7 +167,8 @@ def stack_hist(
         print(sty)
         sty.update(plot_kwargs)
         print(sty)
-        ret = plot_func(ax, edges, top, bottoms=bottoms, label=label, **sty)
+        ret = plot_func(ax, edges, top, bottoms=bottoms,
+                        label=label, **sty)
         bottoms = top
         arts[label] = ret
     ax.legend(fontsize=10)
@@ -186,54 +180,46 @@ edges = np.linspace(-3, 3, 20, endpoint=True)
 hist_func = partial(np.histogram, bins=edges)
 
 # set up style cycles
-color_cycle = cycler(facecolor=plt.rcParams["axes.prop_cycle"][:4])
-label_cycle = cycler(label=["set {n}".format(n=n) for n in range(4)])
-hatch_cycle = cycler(hatch=["/", "*", "+", "|"])
+color_cycle = cycler(facecolor=plt.rcParams['axes.prop_cycle'][:4])
+label_cycle = cycler(label=['set {n}'.format(n=n) for n in range(4)])
+hatch_cycle = cycler(hatch=['/', '*', '+', '|'])
 
 # Fixing random state for reproducibility
 np.random.seed(19680801)
 
 stack_data = np.random.randn(4, 12250)
-dict_data = OrderedDict(zip((c["label"] for c in label_cycle), stack_data))
+dict_data = OrderedDict(zip((c['label'] for c in label_cycle), stack_data))
 
 ###############################################################################
 # Work with plain arrays
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 4.5), tight_layout=True)
-arts = stack_hist(
-    ax1, stack_data, color_cycle + label_cycle + hatch_cycle, hist_func=hist_func
-)
+arts = stack_hist(ax1, stack_data, color_cycle + label_cycle + hatch_cycle,
+                  hist_func=hist_func)
 
-arts = stack_hist(
-    ax2,
-    stack_data,
-    color_cycle,
-    hist_func=hist_func,
-    plot_kwargs=dict(edgecolor="w", orientation="h"),
-)
-ax1.set_ylabel("counts")
-ax1.set_xlabel("x")
-ax2.set_xlabel("counts")
-ax2.set_ylabel("x")
+arts = stack_hist(ax2, stack_data, color_cycle,
+                  hist_func=hist_func,
+                  plot_kwargs=dict(edgecolor='w', orientation='h'))
+ax1.set_ylabel('counts')
+ax1.set_xlabel('x')
+ax2.set_xlabel('counts')
+ax2.set_ylabel('x')
 
 ###############################################################################
 # Work with labeled data
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 4.5), tight_layout=True, sharey=True)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 4.5),
+                               tight_layout=True, sharey=True)
 
-arts = stack_hist(ax1, dict_data, color_cycle + hatch_cycle, hist_func=hist_func)
+arts = stack_hist(ax1, dict_data, color_cycle + hatch_cycle,
+                  hist_func=hist_func)
 
-arts = stack_hist(
-    ax2,
-    dict_data,
-    color_cycle + hatch_cycle,
-    hist_func=hist_func,
-    labels=["set 0", "set 3"],
-)
+arts = stack_hist(ax2, dict_data, color_cycle + hatch_cycle,
+                  hist_func=hist_func, labels=['set 0', 'set 3'])
 ax1.xaxis.set_major_locator(mticker.MaxNLocator(5))
-ax1.set_xlabel("counts")
-ax1.set_ylabel("x")
-ax2.set_ylabel("x")
+ax1.set_xlabel('counts')
+ax1.set_ylabel('x')
+ax2.set_ylabel('x')
 
 plt.show()
 
@@ -248,7 +234,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.fill_betweenx
 matplotlib.axes.Axes.fill_between
 matplotlib.axis.Axis.set_major_locator

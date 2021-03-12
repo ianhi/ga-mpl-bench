@@ -23,8 +23,9 @@ import matplotlib.dates as dates
 import matplotlib.ticker as ticker
 import matplotlib.pyplot as plt
 
-# load some financial data; Google's stock price
-r = cbook.get_sample_data("goog.npz", np_load=True)["price_data"].view(np.recarray)
+# load some financial data; apple's stock price
+r = (cbook.get_sample_data('aapl.npz', np_load=True)['price_data']
+     .view(np.recarray))
 r = r[-250:]  # get the last 250 days
 
 fig, ax = plt.subplots()
@@ -35,12 +36,12 @@ ax.xaxis.set_major_locator(dates.MonthLocator())
 ax.xaxis.set_minor_locator(dates.MonthLocator(bymonthday=16))
 
 ax.xaxis.set_major_formatter(ticker.NullFormatter())
-ax.xaxis.set_minor_formatter(dates.DateFormatter("%b"))
+ax.xaxis.set_minor_formatter(dates.DateFormatter('%b'))
 
 for tick in ax.xaxis.get_minor_ticks():
     tick.tick1line.set_markersize(0)
     tick.tick2line.set_markersize(0)
-    tick.label1.set_horizontalalignment("center")
+    tick.label1.set_horizontalalignment('center')
 
 imid = len(r) // 2
 ax.set_xlabel(str(r.date[imid].item().year))

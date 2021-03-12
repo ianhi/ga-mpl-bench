@@ -15,17 +15,13 @@ Path = mpath.Path
 
 fig, ax = plt.subplots()
 pp1 = mpatches.PathPatch(
-    Path(
-        [(0, 0), (1, 0), (1, 1), (0, 0)],
-        [Path.MOVETO, Path.CURVE3, Path.CURVE3, Path.CLOSEPOLY],
-    ),
-    fc="none",
-    transform=ax.transData,
-)
+    Path([(0, 0), (1, 0), (1, 1), (0, 0)],
+         [Path.MOVETO, Path.CURVE3, Path.CURVE3, Path.CLOSEPOLY]),
+    fc="none", transform=ax.transData)
 
 ax.add_patch(pp1)
 ax.plot([0.75], [0.25], "ro")
-ax.set_title("The red point should be on the path")
+ax.set_title('The red point should be on the path')
 
 plt.show()
 
@@ -40,7 +36,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.path
 matplotlib.path.Path
 matplotlib.patches

@@ -1,19 +1,16 @@
 """
-=========================================
-Placing date ticks using recurrence rules
-=========================================
+===============
+Date Demo Rrule
+===============
 
-The `iCalender RFC`_ specifies *recurrence rules* (rrules), that define
-date sequences. You can use rrules in Matplotlib to place date ticks.
+Show how to use an rrule instance to make a custom date ticker - here
+we put a tick mark on every 5th easter
 
-This example sets custom date ticks on every 5th easter.
-
-See https://dateutil.readthedocs.io/en/stable/rrule.html for help with rrules.
-
-.. _iCalender RFC: https://tools.ietf.org/html/rfc5545
+See https://dateutil.readthedocs.io/en/stable/ for help with rrules
 """
 import matplotlib.pyplot as plt
-from matplotlib.dates import YEARLY, DateFormatter, rrulewrapper, RRuleLocator, drange
+from matplotlib.dates import (YEARLY, DateFormatter,
+                              rrulewrapper, RRuleLocator, drange)
 import numpy as np
 import datetime
 
@@ -24,7 +21,7 @@ np.random.seed(19680801)
 # tick every 5th easter
 rule = rrulewrapper(YEARLY, byeaster=1, interval=5)
 loc = RRuleLocator(rule)
-formatter = DateFormatter("%m/%d/%y")
+formatter = DateFormatter('%m/%d/%y')
 date1 = datetime.date(1952, 1, 1)
 date2 = datetime.date(2004, 4, 12)
 delta = datetime.timedelta(days=100)

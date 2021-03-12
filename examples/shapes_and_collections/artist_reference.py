@@ -20,7 +20,7 @@ from matplotlib.collections import PatchCollection
 
 def label(xy, text):
     y = xy[1] - 0.15  # shift y-value for label so that it's below the artist
-    plt.text(xy[0], y, text, ha="center", family="sans-serif", size=14)
+    plt.text(xy[0], y, text, ha="center", family='sans-serif', size=14)
 
 
 fig, ax = plt.subplots()
@@ -55,7 +55,8 @@ patches.append(ellipse)
 label(grid[4], "Ellipse")
 
 # add an arrow
-arrow = mpatches.Arrow(grid[5, 0] - 0.05, grid[5, 1] - 0.05, 0.1, 0.1, width=0.1)
+arrow = mpatches.Arrow(grid[5, 0] - 0.05, grid[5, 1] - 0.05, 0.1, 0.1,
+                       width=0.1)
 patches.append(arrow)
 label(grid[5], "Arrow")
 
@@ -70,8 +71,7 @@ path_data = [
     (Path.CURVE4, [0.043, 0.121]),
     (Path.CURVE4, [0.075, -0.005]),
     (Path.CURVE4, [0.035, -0.027]),
-    (Path.CLOSEPOLY, [0.018, -0.11]),
-]
+    (Path.CLOSEPOLY, [0.018, -0.11])]
 codes, verts = zip(*path_data)
 path = mpath.Path(verts + grid[6], codes)
 patch = mpatches.PathPatch(path)
@@ -80,14 +80,14 @@ label(grid[6], "PathPatch")
 
 # add a fancy box
 fancybox = mpatches.FancyBboxPatch(
-    grid[7] - [0.025, 0.05], 0.05, 0.1, boxstyle=mpatches.BoxStyle("Round", pad=0.02)
-)
+    grid[7] - [0.025, 0.05], 0.05, 0.1,
+    boxstyle=mpatches.BoxStyle("Round", pad=0.02))
 patches.append(fancybox)
 label(grid[7], "FancyBboxPatch")
 
 # add a line
 x, y = ([-0.06, 0.0, 0.1], [0.05, -0.05, 0.05])
-line = mlines.Line2D(x + grid[8, 0], y + grid[8, 1], lw=5.0, alpha=0.3)
+line = mlines.Line2D(x + grid[8, 0], y + grid[8, 1], lw=5., alpha=0.3)
 label(grid[8], "Line2D")
 
 colors = np.linspace(0, 1, len(patches))
@@ -96,8 +96,8 @@ collection.set_array(colors)
 ax.add_collection(collection)
 ax.add_line(line)
 
-plt.axis("equal")
-plt.axis("off")
+plt.axis('equal')
+plt.axis('off')
 plt.tight_layout()
 
 plt.show()
@@ -113,7 +113,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.path
 matplotlib.path.Path
 matplotlib.lines

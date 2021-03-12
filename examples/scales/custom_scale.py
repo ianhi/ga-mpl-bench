@@ -40,7 +40,7 @@ class MercatorLatitudeScale(mscale.ScaleBase):
     # The scale class must have a member ``name`` that defines the string used
     # to select the scale.  For example, ``gca().set_yscale("mercator")`` would
     # be used to select this scale.
-    name = "mercator"
+    name = 'mercator'
 
     def __init__(self, axis, *, thresh=np.deg2rad(85), **kwargs):
         """
@@ -76,12 +76,10 @@ class MercatorLatitudeScale(mscale.ScaleBase):
         degrees and a custom formatter to convert the radians to degrees and
         put a degree symbol after the value.
         """
-        fmt = FuncFormatter(lambda x, pos=None: f"{np.degrees(x):.0f}\N{DEGREE SIGN}")
-        axis.set(
-            major_locator=FixedLocator(np.radians(range(-90, 90, 10))),
-            major_formatter=fmt,
-            minor_formatter=fmt,
-        )
+        fmt = FuncFormatter(
+            lambda x, pos=None: f"{np.degrees(x):.0f}\N{DEGREE SIGN}")
+        axis.set(major_locator=FixedLocator(np.radians(range(-90, 90, 10))),
+                 major_formatter=fmt, minor_formatter=fmt)
 
     def limit_range_for_scale(self, vmin, vmax, minpos):
         """
@@ -132,7 +130,8 @@ class MercatorLatitudeScale(mscale.ScaleBase):
             Override this method so Matplotlib knows how to get the
             inverse transform for this transform.
             """
-            return MercatorLatitudeScale.InvertedMercatorLatitudeTransform(self.thresh)
+            return MercatorLatitudeScale.InvertedMercatorLatitudeTransform(
+                self.thresh)
 
     class InvertedMercatorLatitudeTransform(mtransforms.Transform):
         input_dims = output_dims = 1
@@ -153,18 +152,18 @@ class MercatorLatitudeScale(mscale.ScaleBase):
 mscale.register_scale(MercatorLatitudeScale)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
     t = np.arange(-180.0, 180.0, 0.1)
-    s = np.radians(t) / 2.0
+    s = np.radians(t)/2.
 
-    plt.plot(t, s, "-", lw=2)
-    plt.gca().set_yscale("mercator")
+    plt.plot(t, s, '-', lw=2)
+    plt.gca().set_yscale('mercator')
 
-    plt.xlabel("Longitude")
-    plt.ylabel("Latitude")
-    plt.title("Mercator projection")
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    plt.title('Mercator projection')
     plt.grid(True)
 
     plt.show()

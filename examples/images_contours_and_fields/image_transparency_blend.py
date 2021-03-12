@@ -1,18 +1,18 @@
 """
-==========================================
-Blend transparency with color in 2D images
-==========================================
+===========================================
+Blend transparency with color in 2-D images
+===========================================
 
 Blend transparency with color to highlight parts of data with imshow.
 
-A common use for `matplotlib.pyplot.imshow` is to plot a 2D statistical
-map. The function makes it easy to visualize a 2D matrix as an image and add
+A common use for `matplotlib.pyplot.imshow` is to plot a 2-D statistical
+map. The function makes it easy to visualize a 2-D matrix as an image and add
 transparency to the output. For example, one can plot a statistic (such as a
 t-statistic) and color the transparency of each pixel according to its p-value.
 This example demonstrates how you can achieve this effect.
 
-First we will generate some data, in this case, we'll create two 2D "blobs"
-in a 2D grid. One blob will be positive, and the other negative.
+First we will generate some data, in this case, we'll create two 2-D "blobs"
+in a 2-D grid. One blob will be positive, and the other negative.
 """
 
 # sphinx_gallery_thumbnail_number = 3
@@ -22,7 +22,7 @@ from matplotlib.colors import Normalize
 
 
 def normal_pdf(x, mean, var):
-    return np.exp(-((x - mean) ** 2) / (2 * var))
+    return np.exp(-(x - mean)**2 / (2*var))
 
 
 # Generate the space in which the blobs will live
@@ -42,7 +42,8 @@ gauss_y_high = normal_pdf(yy, means_high[1], var[0])
 gauss_x_low = normal_pdf(xx, means_low[0], var[1])
 gauss_y_low = normal_pdf(yy, means_low[1], var[1])
 
-weights = np.outer(gauss_y_high, gauss_x_high) - np.outer(gauss_y_low, gauss_x_low)
+weights = (np.outer(gauss_y_high, gauss_x_high)
+           - np.outer(gauss_y_low, gauss_x_low))
 
 # We'll also create a grey background into which the pixels will fade
 greys = np.full((*weights.shape, 3), 70, dtype=np.uint8)
@@ -50,10 +51,10 @@ greys = np.full((*weights.shape, 3), 70, dtype=np.uint8)
 # First we'll plot these blobs using ``imshow`` without transparency.
 vmax = np.abs(weights).max()
 imshow_kwargs = {
-    "vmax": vmax,
-    "vmin": -vmax,
-    "cmap": "RdYlBu",
-    "extent": (xmin, xmax, ymin, ymax),
+    'vmax': vmax,
+    'vmin': -vmax,
+    'cmap': 'RdYlBu',
+    'extent': (xmin, xmax, ymin, ymax),
 }
 
 fig, ax = plt.subplots()
@@ -92,8 +93,8 @@ ax.set_axis_off()
 
 # Create an alpha channel based on weight values
 # Any value whose absolute value is > .0001 will have zero transparency
-alphas = Normalize(0, 0.3, clip=True)(np.abs(weights))
-alphas = np.clip(alphas, 0.4, 1)  # alpha value clipped at the bottom at .4
+alphas = Normalize(0, .3, clip=True)(np.abs(weights))
+alphas = np.clip(alphas, .4, 1)  # alpha value clipped at the bottom at .4
 
 # Create the figure and image
 # Note that the absolute values may be slightly different
@@ -102,11 +103,11 @@ ax.imshow(greys)
 ax.imshow(weights, alpha=alphas, **imshow_kwargs)
 
 # Add contour lines to further highlight different levels.
-ax.contour(weights[::-1], levels=[-0.1, 0.1], colors="k", linestyles="-")
+ax.contour(weights[::-1], levels=[-.1, .1], colors='k', linestyles='-')
 ax.set_axis_off()
 plt.show()
 
-ax.contour(weights[::-1], levels=[-0.0001, 0.0001], colors="k", linestyles="-")
+ax.contour(weights[::-1], levels=[-.0001, .0001], colors='k', linestyles='-')
 ax.set_axis_off()
 plt.show()
 
@@ -121,7 +122,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.imshow
 matplotlib.pyplot.imshow
 matplotlib.axes.Axes.contour

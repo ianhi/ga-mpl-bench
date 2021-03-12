@@ -1,59 +1,27 @@
 """
-=======================
-Convert texts to images
-=======================
+===============================
+A mathtext image as numpy array
+===============================
+
+Make images from LaTeX strings.
 """
 
-from io import BytesIO
-
-from matplotlib.figure import Figure
+import matplotlib.mathtext as mathtext
 import matplotlib.pyplot as plt
-from matplotlib.transforms import IdentityTransform
 
+parser = mathtext.MathTextParser("Bitmap")
+parser.to_png('test2.png',
+              r'$\left[\left\lfloor\frac{5}{\frac{\left(3\right)}{4}} '
+              r'y\right)\right]$', color='green', fontsize=14, dpi=100)
 
-def text_to_rgba(s, *, dpi, **kwargs):
-    # To convert a text string to an image, we can:
-    # - draw it on an empty and transparent figure;
-    # - save the figure to a temporary buffer using ``bbox_inches="tight",
-    #   pad_inches=0`` which will pick the correct area to save;
-    # - load the buffer using ``plt.imread``.
-    #
-    # (If desired, one can also directly save the image to the filesystem.)
-    fig = Figure(facecolor="none")
-    fig.text(0, 0, s, **kwargs)
-    buf = BytesIO()
-    fig.savefig(buf, dpi=dpi, format="png", bbox_inches="tight", pad_inches=0)
-    buf.seek(0)
-    rgba = plt.imread(buf)
-    return rgba
-
+rgba1, depth1 = parser.to_rgba(
+    r'IQ: $\sigma_i=15$', color='blue', fontsize=20, dpi=200)
+rgba2, depth2 = parser.to_rgba(
+    r'some other string', color='red', fontsize=20, dpi=200)
 
 fig = plt.figure()
-rgba1 = text_to_rgba(r"IQ: $\sigma_i=15$", color="blue", fontsize=20, dpi=200)
-rgba2 = text_to_rgba(r"some other string", color="red", fontsize=20, dpi=200)
-# One can then draw such text images to a Figure using `.Figure.figimage`.
-fig.figimage(rgba1, 100, 50)
-fig.figimage(rgba2, 100, 150)
-
-# One can also directly draw texts to a figure with positioning
-# in pixel coordinates by using `.Figure.text` together with
-# `.transforms.IdentityTransform`.
-fig.text(
-    100,
-    250,
-    r"IQ: $\sigma_i=15$",
-    color="blue",
-    fontsize=20,
-    transform=IdentityTransform(),
-)
-fig.text(
-    100,
-    350,
-    r"some other string",
-    color="red",
-    fontsize=20,
-    transform=IdentityTransform(),
-)
+fig.figimage(rgba1, 100, 100)
+fig.figimage(rgba2, 100, 300)
 
 plt.show()
 
@@ -68,8 +36,8 @@ plt.show()
 # in this example:
 
 import matplotlib
-
+matplotlib.mathtext
+matplotlib.mathtext.MathTextParser
+matplotlib.mathtext.MathTextParser.to_png
+matplotlib.mathtext.MathTextParser.to_rgba
 matplotlib.figure.Figure.figimage
-matplotlib.figure.Figure.text
-matplotlib.transforms.IdentityTransform
-matplotlib.image.imread

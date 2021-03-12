@@ -22,24 +22,24 @@ dt = 0.001
 t = np.arange(0.0, 10.0, dt)
 r = np.exp(-t[:1000] / 0.05)  # impulse response
 x = np.random.randn(len(t))
-s = np.convolve(x, r)[: len(x)] * dt  # colored noise
+s = np.convolve(x, r)[:len(x)] * dt  # colored noise
 
 fig, main_ax = plt.subplots()
 main_ax.plot(t, s)
 main_ax.set_xlim(0, 1)
 main_ax.set_ylim(1.1 * np.min(s), 2 * np.max(s))
-main_ax.set_xlabel("time (s)")
-main_ax.set_ylabel("current (nA)")
-main_ax.set_title("Gaussian colored noise")
+main_ax.set_xlabel('time (s)')
+main_ax.set_ylabel('current (nA)')
+main_ax.set_title('Gaussian colored noise')
 
 # this is an inset axes over the main axes
-right_inset_ax = fig.add_axes([0.65, 0.6, 0.2, 0.2], facecolor="k")
+right_inset_ax = fig.add_axes([.65, .6, .2, .2], facecolor='k')
 right_inset_ax.hist(s, 400, density=True)
-right_inset_ax.set(title="Probability", xticks=[], yticks=[])
+right_inset_ax.set(title='Probability', xticks=[], yticks=[])
 
 # this is another inset axes over the main axes
-left_inset_ax = fig.add_axes([0.2, 0.6, 0.2, 0.2], facecolor="k")
-left_inset_ax.plot(t[: len(r)], r)
-left_inset_ax.set(title="Impulse response", xlim=(0, 0.2), xticks=[], yticks=[])
+left_inset_ax = fig.add_axes([.2, .6, .2, .2], facecolor='k')
+left_inset_ax.plot(t[:len(r)], r)
+left_inset_ax.set(title='Impulse response', xlim=(0, .2), xticks=[], yticks=[])
 
 plt.show()

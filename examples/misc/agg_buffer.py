@@ -22,7 +22,6 @@ X = np.asarray(agg.buffer_rgba())
 
 # Pass off to PIL.
 from PIL import Image
-
 im = Image.fromarray(X)
 
 # Uncomment this line to display the image using ImageMagick's `display` tool.

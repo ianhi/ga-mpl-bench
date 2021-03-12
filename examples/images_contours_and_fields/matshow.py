@@ -26,6 +26,5 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.matshow
 matplotlib.pyplot.matshow

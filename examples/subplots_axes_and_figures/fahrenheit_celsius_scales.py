@@ -15,7 +15,7 @@ def fahrenheit2celsius(temp):
     """
     Returns temperature in Celsius given Fahrenheit temperature.
     """
-    return (5.0 / 9.0) * (temp - 32)
+    return (5. / 9.) * (temp - 32)
 
 
 def make_plot():
@@ -37,11 +37,10 @@ def make_plot():
     ax_f.plot(np.linspace(-40, 120, 100))
     ax_f.set_xlim(0, 100)
 
-    ax_f.set_title("Two scales: Fahrenheit and Celsius")
-    ax_f.set_ylabel("Fahrenheit")
-    ax_c.set_ylabel("Celsius")
+    ax_f.set_title('Two scales: Fahrenheit and Celsius')
+    ax_f.set_ylabel('Fahrenheit')
+    ax_c.set_ylabel('Celsius')
 
     plt.show()
-
 
 make_plot()

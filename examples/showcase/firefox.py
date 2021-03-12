@@ -17,53 +17,55 @@ firefox = "M28.4,22.469c0.479-0.964,0.851-1.991,1.095-3.066c0.953-3.661,0.666-6.
 
 
 def svg_parse(path):
-    commands = {
-        "M": (Path.MOVETO,),
-        "L": (Path.LINETO,),
-        "Q": (Path.CURVE3,) * 2,
-        "C": (Path.CURVE4,) * 3,
-        "Z": (Path.CLOSEPOLY,),
-    }
+    commands = {'M': (Path.MOVETO,),
+                'L': (Path.LINETO,),
+                'Q': (Path.CURVE3,)*2,
+                'C': (Path.CURVE4,)*3,
+                'Z': (Path.CLOSEPOLY,)}
+    path_re = re.compile(r'([MLHVCSQTAZ])([^MLHVCSQTAZ]+)', re.IGNORECASE)
+    float_re = re.compile(r'(?:[\s,]*)([+-]?\d+(?:\.\d+)?)')
     vertices = []
     codes = []
-    cmd_values = re.split("([A-Za-z])", path)[1:]  # Split over commands.
-    for cmd, values in zip(cmd_values[::2], cmd_values[1::2]):
-        # Numbers are separated either by commas, or by +/- signs (but not at
-        # the beginning of the string).
-        points = (
-            [*map(float, re.split(",|(?<!^)(?=[+-])", values))]
-            if values
-            else [(0.0, 0.0)]
-        )  # Only for "z/Z" (CLOSEPOLY).
-        points = np.reshape(points, (-1, 2))
+    last = (0, 0)
+    for cmd, values in path_re.findall(path):
+        points = [float(v) for v in float_re.findall(values)]
+        points = np.array(points).reshape((len(points)//2, 2))
         if cmd.islower():
-            points += vertices[-1][-1]
-        codes.extend(commands[cmd.upper()])
-        vertices.append(points)
-    return np.array(codes), np.concatenate(vertices)
+            points += last
+        cmd = cmd.capitalize()
+        last = points[-1]
+        codes.extend(commands[cmd])
+        vertices.extend(points.tolist())
+    return codes, vertices
 
-
-# SVG to Matplotlib
+# SVG to matplotlib
 codes, verts = svg_parse(firefox)
+verts = np.array(verts)
 path = Path(verts, codes)
 
-xmin, ymin = verts.min(axis=0) - 1
-xmax, ymax = verts.max(axis=0) + 1
+# Make upside down
+verts[:, 1] *= -1
+xmin, xmax = verts[:, 0].min()-1, verts[:, 0].max()+1
+ymin, ymax = verts[:, 1].min()-1, verts[:, 1].max()+1
 
-fig = plt.figure(figsize=(5, 5), facecolor="0.75")  # gray background
-ax = fig.add_axes(
-    [0, 0, 1, 1],
-    frameon=False,
-    aspect=1,
-    xlim=(xmin, xmax),  # centering
-    ylim=(ymax, ymin),  # centering, upside down
-    xticks=[],
-    yticks=[],
-)  # no ticks
+fig = plt.figure(figsize=(5, 5))
+ax = fig.add_axes([0.0, 0.0, 1.0, 1.0], frameon=False, aspect=1)
 
 # White outline (width = 6)
-ax.add_patch(patches.PathPatch(path, facecolor="none", edgecolor="w", lw=6))
-# Actual shape with black outline
-ax.add_patch(patches.PathPatch(path, facecolor="orange", edgecolor="k", lw=2))
+patch = patches.PathPatch(path, facecolor='None', edgecolor='w', lw=6)
+ax.add_patch(patch)
 
-plt.show()  # Display
+# Actual shape with black outline
+patch = patches.PathPatch(path, facecolor='orange', edgecolor='k', lw=2)
+ax.add_patch(patch)
+
+# Centering
+ax.set_xlim(xmin, xmax)
+ax.set_ylim(ymin, ymax)
+
+# No ticks
+ax.set_xticks([])
+ax.set_yticks([])
+
+# Display
+plt.show()

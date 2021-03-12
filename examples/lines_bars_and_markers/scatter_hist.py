@@ -43,11 +43,11 @@ def scatter_hist(x, y, ax, ax_histx, ax_histy):
     # now determine nice limits by hand:
     binwidth = 0.25
     xymax = max(np.max(np.abs(x)), np.max(np.abs(y)))
-    lim = (int(xymax / binwidth) + 1) * binwidth
+    lim = (int(xymax/binwidth) + 1) * binwidth
 
     bins = np.arange(-lim, lim + binwidth, binwidth)
     ax_histx.hist(x, bins=bins)
-    ax_histy.hist(y, bins=bins, orientation="horizontal")
+    ax_histy.hist(y, bins=bins, orientation='horizontal')
 
 
 #############################################################################
@@ -97,18 +97,9 @@ fig = plt.figure(figsize=(8, 8))
 # Add a gridspec with two rows and two columns and a ratio of 2 to 7 between
 # the size of the marginal axes and the main axes in both directions.
 # Also adjust the subplot parameters for a square plot.
-gs = fig.add_gridspec(
-    2,
-    2,
-    width_ratios=(7, 2),
-    height_ratios=(2, 7),
-    left=0.1,
-    right=0.9,
-    bottom=0.1,
-    top=0.9,
-    wspace=0.05,
-    hspace=0.05,
-)
+gs = fig.add_gridspec(2, 2,  width_ratios=(7, 2), height_ratios=(2, 7),
+                      left=0.1, right=0.9, bottom=0.1, top=0.9,
+                      wspace=0.05, hspace=0.05)
 
 ax = fig.add_subplot(gs[1, 0])
 ax_histx = fig.add_subplot(gs[0, 0], sharex=ax)
@@ -131,7 +122,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.figure.Figure.add_axes
 matplotlib.figure.Figure.add_subplot
 matplotlib.figure.Figure.add_gridspec

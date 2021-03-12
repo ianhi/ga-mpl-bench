@@ -19,10 +19,10 @@ y2 = np.cos(2 * np.pi * x2)
 # Create two subplots sharing y axis
 fig, (ax1, ax2) = plt.subplots(2, sharey=True)
 
-ax1.plot(x1, y1, "ko-")
-ax1.set(title="A tale of 2 subplots", ylabel="Damped oscillation")
+ax1.plot(x1, y1, 'ko-')
+ax1.set(title='A tale of 2 subplots', ylabel='Damped oscillation')
 
-ax2.plot(x2, y2, "r.-")
-ax2.set(xlabel="time (s)", ylabel="Undamped")
+ax2.plot(x2, y2, 'r.-')
+ax2.set(xlabel='time (s)', ylabel='Undamped')
 
 plt.show()

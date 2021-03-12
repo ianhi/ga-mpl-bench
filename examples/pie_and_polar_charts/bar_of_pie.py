@@ -15,36 +15,40 @@ from matplotlib.patches import ConnectionPatch
 import numpy as np
 
 # make figure and assign axis objects
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 5))
+fig = plt.figure(figsize=(9, 5))
+ax1 = fig.add_subplot(121)
+ax2 = fig.add_subplot(122)
 fig.subplots_adjust(wspace=0)
 
 # pie chart parameters
-ratios = [0.27, 0.56, 0.17]
-labels = ["Approve", "Disapprove", "Undecided"]
+ratios = [.27, .56, .17]
+labels = ['Approve', 'Disapprove', 'Undecided']
 explode = [0.1, 0, 0]
 # rotate so that first wedge is split by the x-axis
 angle = -180 * ratios[0]
-ax1.pie(ratios, autopct="%1.1f%%", startangle=angle, labels=labels, explode=explode)
+ax1.pie(ratios, autopct='%1.1f%%', startangle=angle,
+        labels=labels, explode=explode)
 
 # bar chart parameters
 
 xpos = 0
 bottom = 0
-ratios = [0.33, 0.54, 0.07, 0.06]
-width = 0.2
-colors = [[0.1, 0.3, 0.5], [0.1, 0.3, 0.3], [0.1, 0.3, 0.7], [0.1, 0.3, 0.9]]
+ratios = [.33, .54, .07, .06]
+width = .2
+colors = [[.1, .3, .5], [.1, .3, .3], [.1, .3, .7], [.1, .3, .9]]
 
 for j in range(len(ratios)):
     height = ratios[j]
     ax2.bar(xpos, height, width, bottom=bottom, color=colors[j])
     ypos = bottom + ax2.patches[j].get_height() / 2
     bottom += height
-    ax2.text(xpos, ypos, "%d%%" % (ax2.patches[j].get_height() * 100), ha="center")
+    ax2.text(xpos, ypos, "%d%%" % (ax2.patches[j].get_height() * 100),
+             ha='center')
 
-ax2.set_title("Age of approvers")
-ax2.legend(("50-65", "Over 65", "35-49", "Under 35"))
-ax2.axis("off")
-ax2.set_xlim(-2.5 * width, 2.5 * width)
+ax2.set_title('Age of approvers')
+ax2.legend(('50-65', 'Over 65', '35-49', 'Under 35'))
+ax2.axis('off')
+ax2.set_xlim(- 2.5 * width, 2.5 * width)
 
 # use ConnectionPatch to draw lines between the two plots
 # get the wedge data
@@ -55,12 +59,8 @@ bar_height = sum([item.get_height() for item in ax2.patches])
 # draw top connecting line
 x = r * np.cos(np.pi / 180 * theta2) + center[0]
 y = r * np.sin(np.pi / 180 * theta2) + center[1]
-con = ConnectionPatch(
-    xyA=(-width / 2, bar_height),
-    coordsA=ax2.transData,
-    xyB=(x, y),
-    coordsB=ax1.transData,
-)
+con = ConnectionPatch(xyA=(-width / 2, bar_height), coordsA=ax2.transData,
+                      xyB=(x, y), coordsB=ax1.transData)
 con.set_color([0, 0, 0])
 con.set_linewidth(4)
 ax2.add_artist(con)
@@ -68,9 +68,8 @@ ax2.add_artist(con)
 # draw bottom connecting line
 x = r * np.cos(np.pi / 180 * theta1) + center[0]
 y = r * np.sin(np.pi / 180 * theta1) + center[1]
-con = ConnectionPatch(
-    xyA=(-width / 2, 0), coordsA=ax2.transData, xyB=(x, y), coordsB=ax1.transData
-)
+con = ConnectionPatch(xyA=(-width / 2, 0), coordsA=ax2.transData,
+                      xyB=(x, y), coordsB=ax1.transData)
 con.set_color([0, 0, 0])
 ax2.add_artist(con)
 con.set_linewidth(4)
@@ -88,7 +87,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.pie
 matplotlib.axes.Axes.bar
 matplotlib.pyplot

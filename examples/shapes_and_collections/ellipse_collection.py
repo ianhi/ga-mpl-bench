@@ -24,14 +24,15 @@ aa = X * 9
 
 fig, ax = plt.subplots()
 
-ec = EllipseCollection(ww, hh, aa, units="x", offsets=XY, transOffset=ax.transData)
+ec = EllipseCollection(ww, hh, aa, units='x', offsets=XY,
+                       transOffset=ax.transData)
 ec.set_array((X + Y).ravel())
 ax.add_collection(ec)
 ax.autoscale_view()
-ax.set_xlabel("X")
-ax.set_ylabel("y")
+ax.set_xlabel('X')
+ax.set_ylabel('y')
 cbar = plt.colorbar(ec)
-cbar.set_label("X+Y")
+cbar.set_label('X+Y')
 plt.show()
 
 #############################################################################
@@ -45,7 +46,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.collections
 matplotlib.collections.EllipseCollection
 matplotlib.axes.Axes.add_collection

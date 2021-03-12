@@ -17,9 +17,9 @@ import matplotlib.pyplot as plt
 
 def example_plot(ax):
     ax.plot([1, 2])
-    ax.set_xlabel("x-label", fontsize=12)
-    ax.set_ylabel("y-label", fontsize=12)
-    ax.set_title("Title", fontsize=14)
+    ax.set_xlabel('x-label', fontsize=12)
+    ax.set_ylabel('y-label', fontsize=12)
+    ax.set_title('Title', fontsize=14)
 
 
 ###############################################################################
@@ -70,6 +70,5 @@ plt.show()
 # The use of the following functions and methods is shown in this example:
 
 import matplotlib
-
 matplotlib.gridspec.GridSpec
 matplotlib.gridspec.GridSpecFromSubplotSpec

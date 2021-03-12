@@ -18,7 +18,7 @@ import matplotlib.animation as animation
 def data_gen():
     for cnt in itertools.count():
         t = cnt / 10
-        yield t, np.sin(2 * np.pi * t) * np.exp(-t / 10.0)
+        yield t, np.sin(2*np.pi*t) * np.exp(-t/10.)
 
 
 def init():
@@ -27,11 +27,10 @@ def init():
     del xdata[:]
     del ydata[:]
     line.set_data(xdata, ydata)
-    return (line,)
-
+    return line,
 
 fig, ax = plt.subplots()
-(line,) = ax.plot([], [], lw=2)
+line, = ax.plot([], [], lw=2)
 ax.grid()
 xdata, ydata = [], []
 
@@ -44,12 +43,11 @@ def run(data):
     xmin, xmax = ax.get_xlim()
 
     if t >= xmax:
-        ax.set_xlim(xmin, 2 * xmax)
+        ax.set_xlim(xmin, 2*xmax)
         ax.figure.canvas.draw()
     line.set_data(xdata, ydata)
 
-    return (line,)
-
+    return line,
 
 ani = animation.FuncAnimation(fig, run, data_gen, interval=10, init_func=init)
 plt.show()

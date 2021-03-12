@@ -85,14 +85,14 @@ Z = np.cos(X) * np.sin(Y) * 10
 
 colors = [(1, 0, 0), (0, 1, 0), (0, 0, 1)]  # R -> G -> B
 n_bins = [3, 6, 10, 100]  # Discretizes the interpolation into bins
-cmap_name = "my_list"
+cmap_name = 'my_list'
 fig, axs = plt.subplots(2, 2, figsize=(6, 9))
 fig.subplots_adjust(left=0.02, bottom=0.06, right=0.95, top=0.94, wspace=0.05)
 for n_bin, ax in zip(n_bins, axs.ravel()):
     # Create the colormap
-    cmap = LinearSegmentedColormap.from_list(cmap_name, colors, N=n_bin)
+    cm = LinearSegmentedColormap.from_list(cmap_name, colors, N=n_bin)
     # Fewer bins will result in "coarser" colomap interpolation
-    im = ax.imshow(Z, origin="lower", cmap=cmap)
+    im = ax.imshow(Z, origin='lower', cmap=cm)
     ax.set_title("N bins: %s" % n_bin)
     fig.colorbar(im, ax=ax)
 
@@ -100,54 +100,58 @@ for n_bin, ax in zip(n_bins, axs.ravel()):
 ###############################################################################
 # --- Custom colormaps ---
 
-cdict1 = {
-    "red": ((0.0, 0.0, 0.0), (0.5, 0.0, 0.1), (1.0, 1.0, 1.0)),
-    "green": ((0.0, 0.0, 0.0), (1.0, 0.0, 0.0)),
-    "blue": ((0.0, 0.0, 1.0), (0.5, 0.1, 0.0), (1.0, 0.0, 0.0)),
-}
+cdict1 = {'red':   ((0.0, 0.0, 0.0),
+                    (0.5, 0.0, 0.1),
+                    (1.0, 1.0, 1.0)),
 
-cdict2 = {
-    "red": ((0.0, 0.0, 0.0), (0.5, 0.0, 1.0), (1.0, 0.1, 1.0)),
-    "green": ((0.0, 0.0, 0.0), (1.0, 0.0, 0.0)),
-    "blue": ((0.0, 0.0, 0.1), (0.5, 1.0, 0.0), (1.0, 0.0, 0.0)),
-}
+          'green': ((0.0, 0.0, 0.0),
+                    (1.0, 0.0, 0.0)),
 
-cdict3 = {
-    "red": (
-        (0.0, 0.0, 0.0),
-        (0.25, 0.0, 0.0),
-        (0.5, 0.8, 1.0),
-        (0.75, 1.0, 1.0),
-        (1.0, 0.4, 1.0),
-    ),
-    "green": (
-        (0.0, 0.0, 0.0),
-        (0.25, 0.0, 0.0),
-        (0.5, 0.9, 0.9),
-        (0.75, 0.0, 0.0),
-        (1.0, 0.0, 0.0),
-    ),
-    "blue": (
-        (0.0, 0.0, 0.4),
-        (0.25, 1.0, 1.0),
-        (0.5, 1.0, 0.8),
-        (0.75, 0.0, 0.0),
-        (1.0, 0.0, 0.0),
-    ),
-}
+          'blue':  ((0.0, 0.0, 1.0),
+                    (0.5, 0.1, 0.0),
+                    (1.0, 0.0, 0.0))
+          }
+
+cdict2 = {'red':   ((0.0, 0.0, 0.0),
+                    (0.5, 0.0, 1.0),
+                    (1.0, 0.1, 1.0)),
+
+          'green': ((0.0, 0.0, 0.0),
+                    (1.0, 0.0, 0.0)),
+
+          'blue':  ((0.0, 0.0, 0.1),
+                    (0.5, 1.0, 0.0),
+                    (1.0, 0.0, 0.0))
+          }
+
+cdict3 = {'red':  ((0.0, 0.0, 0.0),
+                   (0.25, 0.0, 0.0),
+                   (0.5, 0.8, 1.0),
+                   (0.75, 1.0, 1.0),
+                   (1.0, 0.4, 1.0)),
+
+          'green': ((0.0, 0.0, 0.0),
+                    (0.25, 0.0, 0.0),
+                    (0.5, 0.9, 0.9),
+                    (0.75, 0.0, 0.0),
+                    (1.0, 0.0, 0.0)),
+
+          'blue':  ((0.0, 0.0, 0.4),
+                    (0.25, 1.0, 1.0),
+                    (0.5, 1.0, 0.8),
+                    (0.75, 0.0, 0.0),
+                    (1.0, 0.0, 0.0))
+          }
 
 # Make a modified version of cdict3 with some transparency
 # in the middle of the range.
-cdict4 = {
-    **cdict3,
-    "alpha": (
-        (0.0, 1.0, 1.0),
-        # (0.25, 1.0, 1.0),
-        (0.5, 0.3, 0.3),
-        # (0.75, 1.0, 1.0),
-        (1.0, 1.0, 1.0),
-    ),
-}
+cdict4 = {**cdict3,
+          'alpha': ((0.0, 1.0, 1.0),
+                    # (0.25, 1.0, 1.0),
+                    (0.5, 0.3, 0.3),
+                    # (0.75, 1.0, 1.0),
+                    (1.0, 1.0, 1.0)),
+          }
 
 
 ###############################################################################
@@ -155,7 +159,7 @@ cdict4 = {
 # handling custom colormaps.
 # First, the most direct and explicit:
 
-blue_red1 = LinearSegmentedColormap("BlueRed1", cdict1)
+blue_red1 = LinearSegmentedColormap('BlueRed1', cdict1)
 
 ###############################################################################
 # Second, create the map explicitly and register it.
@@ -163,11 +167,11 @@ blue_red1 = LinearSegmentedColormap("BlueRed1", cdict1)
 # of Colormap, not just
 # a LinearSegmentedColormap:
 
-blue_red2 = LinearSegmentedColormap("BlueRed2", cdict2)
+blue_red2 = LinearSegmentedColormap('BlueRed2', cdict2)
 plt.register_cmap(cmap=blue_red2)
 
-plt.register_cmap(cmap=LinearSegmentedColormap("BlueRed3", cdict3))
-plt.register_cmap(cmap=LinearSegmentedColormap("BlueRedAlpha", cdict4))
+plt.register_cmap(cmap=LinearSegmentedColormap('BlueRed3', cdict3))
+plt.register_cmap(cmap=LinearSegmentedColormap('BlueRedAlpha', cdict4))
 
 ###############################################################################
 # Make the figure:
@@ -180,7 +184,7 @@ fig.subplots_adjust(left=0.02, bottom=0.06, right=0.95, top=0.94, wspace=0.05)
 im1 = axs[0, 0].imshow(Z, cmap=blue_red1)
 fig.colorbar(im1, ax=axs[0, 0])
 
-cmap = plt.get_cmap("BlueRed2")
+cmap = plt.get_cmap('BlueRed2')
 im2 = axs[1, 0].imshow(Z, cmap=cmap)
 fig.colorbar(im2, ax=axs[1, 0])
 
@@ -188,7 +192,7 @@ fig.colorbar(im2, ax=axs[1, 0])
 # not normally do this in the middle of a script like this;
 # it is done here just to illustrate the method.
 
-plt.rcParams["image.cmap"] = "BlueRed3"
+plt.rcParams['image.cmap'] = 'BlueRed3'
 
 im3 = axs[0, 1].imshow(Z)
 fig.colorbar(im3, ax=axs[0, 1])
@@ -202,18 +206,18 @@ axs[0, 1].set_title("Alpha = 1")
 #
 
 # Draw a line with low zorder so it will be behind the image.
-axs[1, 1].plot([0, 10 * np.pi], [0, 20 * np.pi], color="c", lw=20, zorder=-1)
+axs[1, 1].plot([0, 10 * np.pi], [0, 20 * np.pi], color='c', lw=20, zorder=-1)
 
 im4 = axs[1, 1].imshow(Z)
 fig.colorbar(im4, ax=axs[1, 1])
 
 # Here it is: changing the colormap for the current image and its
 # colorbar after they have been plotted.
-im4.set_cmap("BlueRedAlpha")
+im4.set_cmap('BlueRedAlpha')
 axs[1, 1].set_title("Varying alpha")
 #
 
-fig.suptitle("Custom Blue-Red colormaps", fontsize=16)
+fig.suptitle('Custom Blue-Red colormaps', fontsize=16)
 fig.subplots_adjust(top=0.9)
 
 plt.show()
@@ -229,7 +233,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.imshow
 matplotlib.pyplot.imshow
 matplotlib.figure.Figure.colorbar

@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # first define the ratios
-r1 = 0.2  # 20%
+r1 = 0.2       # 20%
 r2 = r1 + 0.4  # 40%
 
 # define some sizes of the scatter marker
@@ -36,9 +36,9 @@ xy3 = np.row_stack([[0, 0], np.column_stack([x3, y3])])
 s3 = np.abs(xy3).max()
 
 fig, ax = plt.subplots()
-ax.scatter(range(3), range(3), marker=xy1, s=s1 ** 2 * sizes, facecolor="blue")
-ax.scatter(range(3), range(3), marker=xy2, s=s2 ** 2 * sizes, facecolor="green")
-ax.scatter(range(3), range(3), marker=xy3, s=s3 ** 2 * sizes, facecolor="red")
+ax.scatter(range(3), range(3), marker=xy1, s=s1**2 * sizes, facecolor='blue')
+ax.scatter(range(3), range(3), marker=xy2, s=s2**2 * sizes, facecolor='green')
+ax.scatter(range(3), range(3), marker=xy3, s=s3**2 * sizes, facecolor='red')
 
 plt.show()
 
@@ -53,6 +53,5 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.scatter
 matplotlib.pyplot.scatter

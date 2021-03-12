@@ -31,13 +31,12 @@ class Cursor:
     """
     A cross hair cursor.
     """
-
     def __init__(self, ax):
         self.ax = ax
-        self.horizontal_line = ax.axhline(color="k", lw=0.8, ls="--")
-        self.vertical_line = ax.axvline(color="k", lw=0.8, ls="--")
+        self.horizontal_line = ax.axhline(color='k', lw=0.8, ls='--')
+        self.vertical_line = ax.axvline(color='k', lw=0.8, ls='--')
         # text location in axes coordinates
-        self.text = ax.text(0.72, 0.9, "", transform=ax.transAxes)
+        self.text = ax.text(0.72, 0.9, '', transform=ax.transAxes)
 
     def set_cross_hair_visible(self, visible):
         need_redraw = self.horizontal_line.get_visible() != visible
@@ -57,7 +56,7 @@ class Cursor:
             # update the line positions
             self.horizontal_line.set_ydata(y)
             self.vertical_line.set_xdata(x)
-            self.text.set_text("x=%1.2f, y=%1.2f" % (x, y))
+            self.text.set_text('x=%1.2f, y=%1.2f' % (x, y))
             self.ax.figure.canvas.draw()
 
 
@@ -65,10 +64,10 @@ x = np.arange(0, 1, 0.01)
 y = np.sin(2 * 2 * np.pi * x)
 
 fig, ax = plt.subplots()
-ax.set_title("Simple cursor")
-ax.plot(x, y, "o")
+ax.set_title('Simple cursor')
+ax.plot(x, y, 'o')
 cursor = Cursor(ax)
-fig.canvas.mpl_connect("motion_notify_event", cursor.on_mouse_move)
+fig.canvas.mpl_connect('motion_notify_event', cursor.on_mouse_move)
 
 
 ##############################################################################
@@ -84,21 +83,19 @@ fig.canvas.mpl_connect("motion_notify_event", cursor.on_mouse_move)
 # created whenever the figure changes. This is achieved by connecting to the
 # ``'draw_event'``.
 
-
 class BlittedCursor:
     """
     A cross hair cursor using blitting for faster redraw.
     """
-
     def __init__(self, ax):
         self.ax = ax
         self.background = None
-        self.horizontal_line = ax.axhline(color="k", lw=0.8, ls="--")
-        self.vertical_line = ax.axvline(color="k", lw=0.8, ls="--")
+        self.horizontal_line = ax.axhline(color='k', lw=0.8, ls='--')
+        self.vertical_line = ax.axvline(color='k', lw=0.8, ls='--')
         # text location in axes coordinates
-        self.text = ax.text(0.72, 0.9, "", transform=ax.transAxes)
+        self.text = ax.text(0.72, 0.9, '', transform=ax.transAxes)
         self._creating_background = False
-        ax.figure.canvas.mpl_connect("draw_event", self.on_draw)
+        ax.figure.canvas.mpl_connect('draw_event', self.on_draw)
 
     def on_draw(self, event):
         self.create_new_background()
@@ -135,7 +132,7 @@ class BlittedCursor:
             x, y = event.xdata, event.ydata
             self.horizontal_line.set_ydata(y)
             self.vertical_line.set_xdata(x)
-            self.text.set_text("x=%1.2f, y=%1.2f" % (x, y))
+            self.text.set_text('x=%1.2f, y=%1.2f' % (x, y))
 
             self.ax.figure.canvas.restore_region(self.background)
             self.ax.draw_artist(self.horizontal_line)
@@ -148,10 +145,10 @@ x = np.arange(0, 1, 0.01)
 y = np.sin(2 * 2 * np.pi * x)
 
 fig, ax = plt.subplots()
-ax.set_title("Blitted cursor")
-ax.plot(x, y, "o")
+ax.set_title('Blitted cursor')
+ax.plot(x, y, 'o')
 blitted_cursor = BlittedCursor(ax)
-fig.canvas.mpl_connect("motion_notify_event", blitted_cursor.on_mouse_move)
+fig.canvas.mpl_connect('motion_notify_event', blitted_cursor.on_mouse_move)
 
 
 ##############################################################################
@@ -166,7 +163,6 @@ fig.canvas.mpl_connect("motion_notify_event", blitted_cursor.on_mouse_move)
 # the lag due to many redraws. Of course, blitting could still be added on top
 # for additional speedup.
 
-
 class SnappingCursor:
     """
     A cross hair cursor that snaps to the data point of a line, which is
@@ -174,15 +170,14 @@ class SnappingCursor:
 
     For simplicity, this assumes that *x* values of the data are sorted.
     """
-
     def __init__(self, ax, line):
         self.ax = ax
-        self.horizontal_line = ax.axhline(color="k", lw=0.8, ls="--")
-        self.vertical_line = ax.axvline(color="k", lw=0.8, ls="--")
+        self.horizontal_line = ax.axhline(color='k', lw=0.8, ls='--')
+        self.vertical_line = ax.axvline(color='k', lw=0.8, ls='--')
         self.x, self.y = line.get_data()
         self._last_index = None
         # text location in axes coords
-        self.text = ax.text(0.72, 0.9, "", transform=ax.transAxes)
+        self.text = ax.text(0.72, 0.9, '', transform=ax.transAxes)
 
     def set_cross_hair_visible(self, visible):
         need_redraw = self.horizontal_line.get_visible() != visible
@@ -209,7 +204,7 @@ class SnappingCursor:
             # update the line positions
             self.horizontal_line.set_ydata(y)
             self.vertical_line.set_xdata(x)
-            self.text.set_text("x=%1.2f, y=%1.2f" % (x, y))
+            self.text.set_text('x=%1.2f, y=%1.2f' % (x, y))
             self.ax.figure.canvas.draw()
 
 
@@ -217,8 +212,8 @@ x = np.arange(0, 1, 0.01)
 y = np.sin(2 * 2 * np.pi * x)
 
 fig, ax = plt.subplots()
-ax.set_title("Snapping cursor")
-(line,) = ax.plot(x, y, "o")
+ax.set_title('Snapping cursor')
+line, = ax.plot(x, y, 'o')
 snap_cursor = SnappingCursor(ax, line)
-fig.canvas.mpl_connect("motion_notify_event", snap_cursor.on_mouse_move)
+fig.canvas.mpl_connect('motion_notify_event', snap_cursor.on_mouse_move)
 plt.show()

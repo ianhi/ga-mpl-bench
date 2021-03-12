@@ -6,10 +6,6 @@ Nested Gridspecs
 GridSpecs can be nested, so that a subplot from a parent GridSpec can
 set the position for a nested grid of subplots.
 
-Note that the same functionality can be achieved more directly with
-`~.figure.FigureBase.subfigures`; see
-:doc:`/gallery/subplots_axes_and_figures/subfigures`.
-
 """
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -17,7 +13,7 @@ import matplotlib.gridspec as gridspec
 
 def format_axes(fig):
     for i, ax in enumerate(fig.axes):
-        ax.text(0.5, 0.5, "ax%d" % (i + 1), va="center", ha="center")
+        ax.text(0.5, 0.5, "ax%d" % (i+1), va="center", ha="center")
         ax.tick_params(labelbottom=False, labelleft=False)
 
 

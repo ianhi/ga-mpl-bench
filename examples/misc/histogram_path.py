@@ -60,7 +60,7 @@ plt.show()
 # the compound path directly using vertices and codes as shown below
 
 nrects = len(left)
-nverts = nrects * (1 + 3 + 1)
+nverts = nrects*(1+3+1)
 verts = np.zeros((nverts, 2))
 codes = np.ones(nverts, int) * path.Path.LINETO
 codes[0::5] = path.Path.MOVETO
@@ -87,7 +87,6 @@ barpath = path.Path(verts, codes)
 # in this example:
 
 import matplotlib
-
 matplotlib.patches
 matplotlib.patches.PathPatch
 matplotlib.path

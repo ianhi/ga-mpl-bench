@@ -57,19 +57,18 @@ lines = [ax.plot(dat[0, 0:1], dat[1, 0:1], dat[2, 0:1])[0] for dat in data]
 
 # Setting the axes properties
 ax.set_xlim3d([0.0, 1.0])
-ax.set_xlabel("X")
+ax.set_xlabel('X')
 
 ax.set_ylim3d([0.0, 1.0])
-ax.set_ylabel("Y")
+ax.set_ylabel('Y')
 
 ax.set_zlim3d([0.0, 1.0])
-ax.set_zlabel("Z")
+ax.set_zlabel('Z')
 
-ax.set_title("3D Test")
+ax.set_title('3D Test')
 
 # Creating the Animation object
 line_ani = animation.FuncAnimation(
-    fig, update_lines, 50, fargs=(data, lines), interval=50
-)
+    fig, update_lines, 50, fargs=(data, lines), interval=50)
 
 plt.show()

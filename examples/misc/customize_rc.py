@@ -26,6 +26,7 @@ functions in a custom module that set the defaults, e.g.,::
 Then as you are working interactively, you just need to do::
 
     >>> set_pub()
+    >>> subplot(111)
     >>> plot([1, 2, 3])
     >>> savefig('myfig')
     >>> rcdefaults()  # restore the defaults
@@ -37,19 +38,17 @@ plt.subplot(311)
 plt.plot([1, 2, 3])
 
 # the axes attributes need to be set before the call to subplot
-plt.rcParams.update(
-    {
-        "font.weight": "bold",
-        "xtick.major.size": 5,
-        "xtick.major.pad": 7,
-        "xtick.labelsize": 15,
-        "grid.color": "0.5",
-        "grid.linestyle": "-",
-        "grid.linewidth": 5,
-        "lines.linewidth": 2,
-        "lines.color": "g",
-    }
-)
+plt.rcParams.update({
+    "font.weight": "bold",
+    "xtick.major.size": 5,
+    "xtick.major.pad": 7,
+    "xtick.labelsize": 15,
+    "grid.color": "0.5",
+    "grid.linestyle": "-",
+    "grid.linewidth": 5,
+    "lines.linewidth": 2,
+    "lines.color": "g",
+})
 plt.subplot(312)
 plt.plot([1, 2, 3])
 plt.grid(True)

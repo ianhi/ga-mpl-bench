@@ -15,7 +15,7 @@ s = np.sin(2 * np.pi * t)
 fig, ax = plt.subplots()
 ax.plot(t, s)
 
-ax.grid(True, linestyle="-.")
-ax.tick_params(labelcolor="r", labelsize="medium", width=3)
+ax.grid(True, linestyle='-.')
+ax.tick_params(labelcolor='r', labelsize='medium', width=3)
 
 plt.show()

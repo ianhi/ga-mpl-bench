@@ -22,19 +22,10 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-text_style = dict(
-    horizontalalignment="right",
-    verticalalignment="center",
-    fontsize=12,
-    fontfamily="monospace",
-)
-marker_style = dict(
-    linestyle=":",
-    color="0.8",
-    markersize=10,
-    markerfacecolor="tab:blue",
-    markeredgecolor="tab:blue",
-)
+text_style = dict(horizontalalignment='right', verticalalignment='center',
+                  fontsize=12, fontfamily='monospace')
+marker_style = dict(linestyle=':', color='0.8', markersize=10,
+                    markerfacecolor="tab:blue", markeredgecolor="tab:blue")
 
 
 def format_axes(ax):
@@ -54,14 +45,11 @@ def split_list(a_list):
 # Unfilled markers are single-colored.
 
 fig, axs = plt.subplots(ncols=2)
-fig.suptitle("Un-filled markers", fontsize=14)
+fig.suptitle('Un-filled markers', fontsize=14)
 
 # Filter out filled markers and marker settings that do nothing.
-unfilled_markers = [
-    m
-    for m, func in Line2D.markers.items()
-    if func != "nothing" and m not in Line2D.filled_markers
-]
+unfilled_markers = [m for m, func in Line2D.markers.items()
+                    if func != 'nothing' and m not in Line2D.filled_markers]
 
 for ax, markers in zip(axs, split_list(unfilled_markers)):
     for y, marker in enumerate(markers):
@@ -77,7 +65,7 @@ plt.show()
 # ==============
 
 fig, axs = plt.subplots(ncols=2)
-fig.suptitle("Filled markers", fontsize=14)
+fig.suptitle('Filled markers', fontsize=14)
 for ax, markers in zip(axs, split_list(Line2D.filled_markers)):
     for y, marker in enumerate(markers):
         ax.text(-0.5, y, repr(marker), **text_style)
@@ -97,18 +85,14 @@ plt.show()
 # ``markerfacecoloralt`` as secondary fill color.
 
 fig, ax = plt.subplots()
-fig.suptitle("Marker fillstyle", fontsize=14)
+fig.suptitle('Marker fillstyle', fontsize=14)
 fig.subplots_adjust(left=0.4)
 
-filled_marker_style = dict(
-    marker="o",
-    linestyle=":",
-    markersize=15,
-    color="darkgrey",
-    markerfacecolor="tab:blue",
-    markerfacecoloralt="lightsteelblue",
-    markeredgecolor="brown",
-)
+filled_marker_style = dict(marker='o', linestyle=':', markersize=15,
+                           color='darkgrey',
+                           markerfacecolor='tab:blue',
+                           markerfacecoloralt='lightsteelblue',
+                           markeredgecolor='brown')
 
 for y, fill_style in enumerate(Line2D.fillStyles):
     ax.text(-0.5, y, repr(fill_style), **text_style)
@@ -129,7 +113,7 @@ plt.show()
 
 
 fig, ax = plt.subplots()
-fig.suptitle("Mathtext markers", fontsize=14)
+fig.suptitle('Mathtext markers', fontsize=14)
 fig.subplots_adjust(left=0.4)
 
 marker_style.update(markeredgecolor="None", markersize=15)

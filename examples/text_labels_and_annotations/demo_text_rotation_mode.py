@@ -1,7 +1,7 @@
 r"""
-==================
-Text Rotation Mode
-==================
+=======================
+Demo Text Rotation Mode
+=======================
 
 This example illustrates the effect of ``rotation_mode`` on the positioning
 of rotated text.
@@ -26,14 +26,9 @@ from mpl_toolkits.axes_grid1.axes_grid import ImageGrid
 def test_rotation_mode(fig, mode, subplot_location):
     ha_list = ["left", "center", "right"]
     va_list = ["top", "center", "baseline", "bottom"]
-    grid = ImageGrid(
-        fig,
-        subplot_location,
-        nrows_ncols=(len(va_list), len(ha_list)),
-        share_all=True,
-        aspect=True,
-        cbar_mode=None,
-    )
+    grid = ImageGrid(fig, subplot_location,
+                     nrows_ncols=(len(va_list), len(ha_list)),
+                     share_all=True, aspect=True, cbar_mode=None)
 
     # labels and title
     for ha, ax in zip(ha_list, grid.axes_row[-1]):
@@ -45,7 +40,8 @@ def test_rotation_mode(fig, mode, subplot_location):
     if mode == "default":
         kw = dict()
     else:
-        kw = dict(bbox=dict(boxstyle="square,pad=0.", ec="none", fc="C1", alpha=0.3))
+        kw = dict(
+            bbox=dict(boxstyle="square,pad=0.", ec="none", fc="C1", alpha=0.3))
 
     # use a different text alignment in each axes
     texts = []
@@ -58,17 +54,10 @@ def test_rotation_mode(fig, mode, subplot_location):
         ax.plot(0.5, 0.5, color="C0", marker="o", zorder=1)
 
         # add text with rotation and alignment settings
-        tx = ax.text(
-            0.5,
-            0.5,
-            "Tpg",
-            size="x-large",
-            rotation=40,
-            horizontalalignment=ha,
-            verticalalignment=va,
-            rotation_mode=mode,
-            **kw,
-        )
+        tx = ax.text(0.5, 0.5, "Tpg",
+                     size="x-large", rotation=40,
+                     horizontalalignment=ha, verticalalignment=va,
+                     rotation_mode=mode, **kw)
         texts.append(tx)
 
     if mode == "default":
@@ -76,9 +65,8 @@ def test_rotation_mode(fig, mode, subplot_location):
         fig.canvas.draw()
         for ax, tx in zip(grid, texts):
             bb = tx.get_window_extent().transformed(ax.transData.inverted())
-            rect = plt.Rectangle(
-                (bb.x0, bb.y0), bb.width, bb.height, facecolor="C1", alpha=0.3, zorder=2
-            )
+            rect = plt.Rectangle((bb.x0, bb.y0), bb.width, bb.height,
+                                 facecolor="C1", alpha=0.3, zorder=2)
             ax.add_patch(rect)
 
 
@@ -98,5 +86,4 @@ plt.show()
 # The use of the following method is shown in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.text

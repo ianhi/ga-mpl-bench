@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-plt.style.use("fivethirtyeight")
+plt.style.use('fivethirtyeight')
 
 x = np.linspace(0, 10)
 

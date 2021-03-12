@@ -30,11 +30,8 @@ class LatexPreviewSubplot(maxes.Axes):
         super().__init__(*args, **kwargs)
 
     def draw(self, renderer):
-        from matplotlib import _api  # internal, *do not use*
-
-        with _api.suppress_matplotlib_deprecation_warning():
-            with plt.rc_context({"text.latex.preview": self.preview}):
-                super().draw(renderer)
+        with plt.rc_context({"text.latex.preview": self.preview}):
+            super().draw(renderer)
 
 
 def test_window_extent(ax, usetex, preview):
@@ -42,24 +39,21 @@ def test_window_extent(ax, usetex, preview):
     ax.xaxis.set_visible(False)
     ax.yaxis.set_visible(False)
 
-    test_strings = ["lg", r"$\frac{1}{2}\pi$", r"$p^{3^A}$", r"$p_{3_2}$"]
+    test_strings = ["lg", r"$\frac{1}{2}\pi$",
+                    r"$p^{3^A}$", r"$p_{3_2}$"]
 
     ax.axvline(0, color="r")
 
     for i, s in enumerate(test_strings):
         ax.axhline(i, color="r")
-        ax.text(
-            0.0,
-            3 - i,
-            s,
-            usetex=usetex,
-            verticalalignment="baseline",
-            size=50,
-            bbox=dict(pad=0, ec="k", fc="none"),
-        )
+        ax.text(0., 3 - i, s,
+                usetex=usetex,
+                verticalalignment="baseline",
+                size=50,
+                bbox=dict(pad=0, ec="k", fc="none"))
 
     ax.set_xlim(-0.1, 1.1)
-    ax.set_ylim(-0.8, 3.9)
+    ax.set_ylim(-.8, 3.9)
 
     title = f"usetex={usetex}\n"
     if usetex:
@@ -69,7 +63,9 @@ def test_window_extent(ax, usetex, preview):
 
 fig = plt.figure(figsize=(2 * 3, 6.5))
 
-for i, usetex, preview in [[0, False, False], [1, True, False], [2, True, True]]:
+for i, usetex, preview in [[0, False, False],
+                           [1, True, False],
+                           [2, True, True]]:
     ax = LatexPreviewSubplot(fig, 1, 3, i + 1, preview=preview)
     fig.add_subplot(ax)
     fig.subplots_adjust(top=0.85)

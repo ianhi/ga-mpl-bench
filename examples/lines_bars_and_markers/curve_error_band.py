@@ -56,12 +56,13 @@ yp = y + ny * err
 xn = x - nx * err
 yn = y - ny * err
 
-vertices = np.block([[xp, xn[::-1]], [yp, yn[::-1]]]).T
+vertices = np.block([[xp, xn[::-1]],
+                     [yp, yn[::-1]]]).T
 codes = Path.LINETO * np.ones(len(vertices), dtype=Path.code_type)
 codes[0] = codes[len(xp)] = Path.MOVETO
 path = Path(vertices, codes)
 
-patch = PathPatch(path, facecolor="C0", edgecolor="none", alpha=0.3)
+patch = PathPatch(path, facecolor='C0', edgecolor='none', alpha=0.3)
 
 fig, ax = plt.subplots()
 ax.plot(x, y)
@@ -79,6 +80,5 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.patches.PathPatch
 matplotlib.path.Path

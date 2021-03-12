@@ -18,15 +18,14 @@ start point and end point, called 'anchor points' from now on.
 Here we show three use cases for plotting arrows, depending on whether the
 head or anchor points need to be fixed in data or display space:
 
-1. Head shape fixed in display space, anchor points fixed in data space
-2. Head shape and anchor points fixed in display space
-3. Entire patch fixed in data space
+    1. Head shape fixed in display space, anchor points fixed in data space
+    2. Head shape and anchor points fixed in display space
+    3. Entire patch fixed in data space
 
 Below each use case is presented in turn.
 """
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
-
 x_tail = 0.1
 y_tail = 0.1
 x_head = 0.9
@@ -49,10 +48,12 @@ dy = y_head - y_tail
 # but the anchor points move.
 
 fig, axs = plt.subplots(nrows=2)
-arrow = mpatches.FancyArrowPatch((x_tail, y_tail), (dx, dy), mutation_scale=100)
+arrow = mpatches.FancyArrowPatch((x_tail, y_tail), (dx, dy),
+                                 mutation_scale=100)
 axs[0].add_patch(arrow)
 
-arrow = mpatches.FancyArrowPatch((x_tail, y_tail), (dx, dy), mutation_scale=100)
+arrow = mpatches.FancyArrowPatch((x_tail, y_tail), (dx, dy),
+                                 mutation_scale=100)
 axs[1].add_patch(arrow)
 axs[1].set_xlim(0, 2)
 axs[1].set_ylim(0, 2)
@@ -72,14 +73,14 @@ axs[1].set_ylim(0, 2)
 # stays the same.
 
 fig, axs = plt.subplots(nrows=2)
-arrow = mpatches.FancyArrowPatch(
-    (x_tail, y_tail), (dx, dy), mutation_scale=100, transform=axs[0].transAxes
-)
+arrow = mpatches.FancyArrowPatch((x_tail, y_tail), (dx, dy),
+                                 mutation_scale=100,
+                                 transform=axs[0].transAxes)
 axs[0].add_patch(arrow)
 
-arrow = mpatches.FancyArrowPatch(
-    (x_tail, y_tail), (dx, dy), mutation_scale=100, transform=axs[1].transAxes
-)
+arrow = mpatches.FancyArrowPatch((x_tail, y_tail), (dx, dy),
+                                 mutation_scale=100,
+                                 transform=axs[1].transAxes)
 axs[1].add_patch(arrow)
 axs[1].set_xlim(0, 2)
 axs[1].set_ylim(0, 2)

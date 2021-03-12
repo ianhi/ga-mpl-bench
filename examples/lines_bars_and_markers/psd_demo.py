@@ -23,12 +23,13 @@ nse = np.random.randn(len(t))
 r = np.exp(-t / 0.05)
 
 cnse = np.convolve(nse, r) * dt
-cnse = cnse[: len(t)]
+cnse = cnse[:len(t)]
 s = 0.1 * np.sin(2 * np.pi * t) + cnse
 
-fig, (ax0, ax1) = plt.subplots(2, 1)
-ax0.plot(t, s)
-ax1.psd(s, 512, 1 / dt)
+plt.subplot(211)
+plt.plot(t, s)
+plt.subplot(212)
+plt.psd(s, 512, 1 / dt)
 
 plt.show()
 
@@ -51,10 +52,10 @@ plt.show()
 # Below we'll show a slightly more complex example that demonstrates
 # how padding affects the resulting PSD.
 
-dt = np.pi / 100.0
-fs = 1.0 / dt
+dt = np.pi / 100.
+fs = 1. / dt
 t = np.arange(0, 8, dt)
-y = 10.0 * np.sin(2 * np.pi * 4 * t) + 5.0 * np.sin(2 * np.pi * 4.25 * t)
+y = 10. * np.sin(2 * np.pi * 4 * t) + 5. * np.sin(2 * np.pi * 4.25 * t)
 y = y + np.random.randn(*t.shape)
 
 # Plot the raw time series
@@ -62,8 +63,8 @@ fig = plt.figure(constrained_layout=True)
 gs = gridspec.GridSpec(2, 3, figure=fig)
 ax = fig.add_subplot(gs[0, :])
 ax.plot(t, y)
-ax.set_xlabel("time [s]")
-ax.set_ylabel("signal")
+ax.set_xlabel('time [s]')
+ax.set_ylabel('signal')
 
 # Plot the PSD with different amounts of zero padding. This uses the entire
 # time series at once
@@ -71,7 +72,7 @@ ax2 = fig.add_subplot(gs[1, 0])
 ax2.psd(y, NFFT=len(t), pad_to=len(t), Fs=fs)
 ax2.psd(y, NFFT=len(t), pad_to=len(t) * 2, Fs=fs)
 ax2.psd(y, NFFT=len(t), pad_to=len(t) * 4, Fs=fs)
-ax2.set_title("zero padding")
+plt.title('zero padding')
 
 # Plot the PSD with different block sizes, Zero pad to the length of the
 # original data sequence.
@@ -79,16 +80,18 @@ ax3 = fig.add_subplot(gs[1, 1], sharex=ax2, sharey=ax2)
 ax3.psd(y, NFFT=len(t), pad_to=len(t), Fs=fs)
 ax3.psd(y, NFFT=len(t) // 2, pad_to=len(t), Fs=fs)
 ax3.psd(y, NFFT=len(t) // 4, pad_to=len(t), Fs=fs)
-ax3.set_ylabel("")
-ax3.set_title("block size")
+ax3.set_ylabel('')
+plt.title('block size')
 
 # Plot the PSD with different amounts of overlap between blocks
 ax4 = fig.add_subplot(gs[1, 2], sharex=ax2, sharey=ax2)
 ax4.psd(y, NFFT=len(t) // 2, pad_to=len(t), noverlap=0, Fs=fs)
-ax4.psd(y, NFFT=len(t) // 2, pad_to=len(t), noverlap=int(0.05 * len(t) / 2.0), Fs=fs)
-ax4.psd(y, NFFT=len(t) // 2, pad_to=len(t), noverlap=int(0.2 * len(t) / 2.0), Fs=fs)
-ax4.set_ylabel("")
-ax4.set_title("overlap")
+ax4.psd(y, NFFT=len(t) // 2, pad_to=len(t),
+        noverlap=int(0.05 * len(t) / 2.), Fs=fs)
+ax4.psd(y, NFFT=len(t) // 2, pad_to=len(t),
+        noverlap=int(0.2 * len(t) / 2.), Fs=fs)
+ax4.set_ylabel('')
+plt.title('overlap')
 
 plt.show()
 
@@ -111,26 +114,20 @@ yticks = np.arange(-50, 30, 10)
 yrange = (yticks[0], yticks[-1])
 xticks = np.arange(0, 550, 100)
 
-ax0.psd(xn, NFFT=301, Fs=fs, window=mlab.window_none, pad_to=1024, scale_by_freq=True)
-ax0.set_title("Periodogram")
+ax0.psd(xn, NFFT=301, Fs=fs, window=mlab.window_none, pad_to=1024,
+        scale_by_freq=True)
+ax0.set_title('Periodogram')
 ax0.set_yticks(yticks)
 ax0.set_xticks(xticks)
 ax0.grid(True)
 ax0.set_ylim(yrange)
 
-ax1.psd(
-    xn,
-    NFFT=150,
-    Fs=fs,
-    window=mlab.window_none,
-    pad_to=512,
-    noverlap=75,
-    scale_by_freq=True,
-)
-ax1.set_title("Welch")
+ax1.psd(xn, NFFT=150, Fs=fs, window=mlab.window_none, pad_to=512, noverlap=75,
+        scale_by_freq=True)
+ax1.set_title('Welch')
 ax1.set_xticks(xticks)
 ax1.set_yticks(yticks)
-ax1.set_ylabel("")  # overwrite the y-label added by `psd`
+ax1.set_ylabel('')  # overwrite the y-label added by `psd`
 ax1.grid(True)
 ax1.set_ylim(yrange)
 
@@ -157,26 +154,20 @@ yticks = np.arange(-50, 30, 10)
 yrange = (yticks[0], yticks[-1])
 xticks = np.arange(-500, 550, 200)
 
-ax0.psd(xn, NFFT=301, Fs=fs, window=mlab.window_none, pad_to=1024, scale_by_freq=True)
-ax0.set_title("Periodogram")
+ax0.psd(xn, NFFT=301, Fs=fs, window=mlab.window_none, pad_to=1024,
+        scale_by_freq=True)
+ax0.set_title('Periodogram')
 ax0.set_yticks(yticks)
 ax0.set_xticks(xticks)
 ax0.grid(True)
 ax0.set_ylim(yrange)
 
-ax1.psd(
-    xn,
-    NFFT=150,
-    Fs=fs,
-    window=mlab.window_none,
-    pad_to=512,
-    noverlap=75,
-    scale_by_freq=True,
-)
-ax1.set_title("Welch")
+ax1.psd(xn, NFFT=150, Fs=fs, window=mlab.window_none, pad_to=512, noverlap=75,
+        scale_by_freq=True)
+ax1.set_title('Welch')
 ax1.set_xticks(xticks)
 ax1.set_yticks(yticks)
-ax1.set_ylabel("")  # overwrite the y-label added by `psd`
+ax1.set_ylabel('')  # overwrite the y-label added by `psd`
 ax1.grid(True)
 ax1.set_ylim(yrange)
 

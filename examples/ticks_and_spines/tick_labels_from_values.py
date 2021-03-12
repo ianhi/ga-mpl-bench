@@ -22,14 +22,14 @@ from matplotlib.ticker import MaxNLocator
 fig, ax = plt.subplots()
 xs = range(26)
 ys = range(26)
-labels = list("abcdefghijklmnopqrstuvwxyz")
+labels = list('abcdefghijklmnopqrstuvwxyz')
 
 
 def format_fn(tick_val, tick_pos):
     if int(tick_val) in xs:
         return labels[int(tick_val)]
     else:
-        return ""
+        return ''
 
 
 # A FuncFormatter is created automatically.
@@ -50,7 +50,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.pyplot.subplots
 matplotlib.axis.Axis.set_major_formatter
 matplotlib.axis.Axis.set_major_locator

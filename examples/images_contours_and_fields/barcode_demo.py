@@ -1,133 +1,33 @@
 """
-=======
-Barcode
-=======
-This demo shows how to produce a bar code.
+============
+Barcode Demo
+============
 
-The figure size is calculated so that the width in pixels is a multiple of the
-number of data points to prevent interpolation artifacts. Additionally, the
-``Axes`` is defined to span the whole figure and all ``Axis`` are turned off.
-
-The data itself is rendered with `~.Axes.imshow` using
-
-- ``code.reshape(1, -1)`` to turn the data into a 2D array with one row.
-- ``imshow(..., aspect='auto')`` to allow for non-square pixels.
-- ``imshow(..., interpolation='nearest')`` to prevent blurred edges. This
-  should not happen anyway because we fine-tuned the figure width in pixels,
-  but just to be safe.
+This demo shows how to produce a one-dimensional image, or "bar code".
 """
-
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Fixing random state for reproducibility
+np.random.seed(19680801)
 
-code = np.array(
-    [
-        1,
-        0,
-        1,
-        0,
-        1,
-        1,
-        1,
-        0,
-        1,
-        1,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        1,
-        0,
-        1,
-        0,
-        0,
-        1,
-        1,
-        1,
-        0,
-        0,
-        0,
-        1,
-        0,
-        1,
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        1,
-        0,
-        0,
-        1,
-        1,
-        0,
-        0,
-        1,
-        0,
-        1,
-        0,
-        1,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        1,
-        1,
-        1,
-        0,
-        1,
-        0,
-        0,
-        1,
-        1,
-        0,
-        1,
-        1,
-        0,
-        0,
-        1,
-        1,
-        0,
-        0,
-        1,
-        1,
-        0,
-        1,
-        0,
-        1,
-        1,
-        1,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        1,
-        0,
-        1,
-    ]
-)
+# the bar
+x = np.random.rand(500) > 0.7
 
-pixel_per_bar = 4
-dpi = 100
+barprops = dict(aspect='auto', cmap='binary', interpolation='nearest')
 
-fig = plt.figure(figsize=(len(code) * pixel_per_bar / dpi, 2), dpi=dpi)
-ax = fig.add_axes([0, 0, 1, 1])  # span the whole figure
-ax.set_axis_off()
-ax.imshow(code.reshape(1, -1), cmap="binary", aspect="auto", interpolation="nearest")
+fig = plt.figure()
+
+# a vertical barcode
+ax1 = fig.add_axes([0.1, 0.1, 0.1, 0.8])
+ax1.set_axis_off()
+ax1.imshow(x.reshape((-1, 1)), **barprops)
+
+# a horizontal barcode
+ax2 = fig.add_axes([0.3, 0.4, 0.6, 0.2])
+ax2.set_axis_off()
+ax2.imshow(x.reshape((1, -1)), **barprops)
+
 plt.show()
 
 #############################################################################
@@ -141,7 +41,5 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.imshow
 matplotlib.pyplot.imshow
-matplotlib.figure.Figure.add_axes

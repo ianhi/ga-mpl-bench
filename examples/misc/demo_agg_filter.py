@@ -1,13 +1,8 @@
 """
-==========
-AGG filter
-==========
+===============
+Demo Agg Filter
+===============
 
-Most pixel-based backends in Matplotlib use `Anti-Grain Geometry (AGG)`_ for
-rendering. You can modify the rendering of Artists by applying a filter via
-`.Artist.set_agg_filter`.
-
-.. _Anti-Grain Geometry (AGG): http://antigrain.com
 """
 
 import matplotlib.cm as cm
@@ -20,10 +15,10 @@ import numpy as np
 
 def smooth1d(x, window_len):
     # copied from http://www.scipy.org/Cookbook/SignalSmooth
-    s = np.r_[2 * x[0] - x[window_len:1:-1], x, 2 * x[-1] - x[-1:-window_len:-1]]
+    s = np.r_[2*x[0] - x[window_len:1:-1], x, 2*x[-1] - x[-1:-window_len:-1]]
     w = np.hanning(window_len)
-    y = np.convolve(w / w.sum(), s, mode="same")
-    return y[window_len - 1 : -window_len + 1]
+    y = np.convolve(w/w.sum(), s, mode='same')
+    return y[window_len-1:-window_len+1]
 
 
 def smooth2d(A, sigma=3):
@@ -34,6 +29,7 @@ def smooth2d(A, sigma=3):
 
 
 class BaseFilter:
+
     def get_pad(self, dpi):
         return 0
 
@@ -48,6 +44,7 @@ class BaseFilter:
 
 
 class OffsetFilter(BaseFilter):
+
     def __init__(self, offsets=(0, 0)):
         self.offsets = offsets
 
@@ -70,24 +67,25 @@ class GaussianFilter(BaseFilter):
         self.color = color
 
     def get_pad(self, dpi):
-        return int(self.sigma * 3 / 72 * dpi)
+        return int(self.sigma*3 / 72 * dpi)
 
     def process_image(self, padded_src, dpi):
         tgt_image = np.empty_like(padded_src)
         tgt_image[:, :, :3] = self.color
-        tgt_image[:, :, 3] = smooth2d(
-            padded_src[:, :, 3] * self.alpha, self.sigma / 72 * dpi
-        )
+        tgt_image[:, :, 3] = smooth2d(padded_src[:, :, 3] * self.alpha,
+                                      self.sigma / 72 * dpi)
         return tgt_image
 
 
 class DropShadowFilter(BaseFilter):
+
     def __init__(self, sigma, alpha=0.3, color=(0, 0, 0), offsets=(0, 0)):
         self.gauss_filter = GaussianFilter(sigma, alpha, color)
         self.offset_filter = OffsetFilter(offsets)
 
     def get_pad(self, dpi):
-        return max(self.gauss_filter.get_pad(dpi), self.offset_filter.get_pad(dpi))
+        return max(self.gauss_filter.get_pad(dpi),
+                   self.offset_filter.get_pad(dpi))
 
     def process_image(self, padded_src, dpi):
         t1 = self.gauss_filter.process_image(padded_src, dpi)
@@ -96,6 +94,7 @@ class DropShadowFilter(BaseFilter):
 
 
 class LightFilter(BaseFilter):
+
     def __init__(self, sigma, fraction=0.5):
         self.gauss_filter = GaussianFilter(sigma, alpha=1)
         self.light_source = LightSource()
@@ -109,7 +108,8 @@ class LightFilter(BaseFilter):
         elevation = t1[:, :, 3]
         rgb = padded_src[:, :, :3]
         alpha = padded_src[:, :, 3:]
-        rgb2 = self.light_source.shade_rgb(rgb, elevation, fraction=self.fraction)
+        rgb2 = self.light_source.shade_rgb(rgb, elevation,
+                                           fraction=self.fraction)
         return np.concatenate([rgb2, alpha], -1)
 
 
@@ -155,34 +155,27 @@ def filtered_text(ax):
     x = np.arange(-3.0, 3.0, delta)
     y = np.arange(-2.0, 2.0, delta)
     X, Y = np.meshgrid(x, y)
-    Z1 = np.exp(-(X ** 2) - Y ** 2)
-    Z2 = np.exp(-((X - 1) ** 2) - (Y - 1) ** 2)
+    Z1 = np.exp(-X**2 - Y**2)
+    Z2 = np.exp(-(X - 1)**2 - (Y - 1)**2)
     Z = (Z1 - Z2) * 2
 
     # draw
-    ax.imshow(
-        Z,
-        interpolation="bilinear",
-        origin="lower",
-        cmap=cm.gray,
-        extent=(-3, 3, -2, 2),
-        aspect="auto",
-    )
+    ax.imshow(Z, interpolation='bilinear', origin='lower',
+              cmap=cm.gray, extent=(-3, 3, -2, 2), aspect='auto')
     levels = np.arange(-1.2, 1.6, 0.2)
-    CS = ax.contour(Z, levels, origin="lower", linewidths=2, extent=(-3, 3, -2, 2))
+    CS = ax.contour(Z, levels,
+                    origin='lower',
+                    linewidths=2,
+                    extent=(-3, 3, -2, 2))
 
     # contour label
-    cl = ax.clabel(
-        CS,
-        levels[1::2],  # label every second level
-        inline=True,
-        fmt="%1.1f",
-        fontsize=11,
-    )
+    cl = ax.clabel(CS, levels[1::2],  # label every second level
+                   inline=True,
+                   fmt='%1.1f',
+                   fontsize=11)
 
     # change clabel color to black
     from matplotlib.patheffects import Normal
-
     for t in cl:
         t.set_color("k")
         # to force TextPath (i.e., same font in all backends)
@@ -201,8 +194,8 @@ def drop_shadow_line(ax):
     # copied from examples/misc/svg_filter_line.py
 
     # draw lines
-    (l1,) = ax.plot([0.1, 0.5, 0.9], [0.1, 0.9, 0.5], "bo-")
-    (l2,) = ax.plot([0.1, 0.5, 0.9], [0.5, 0.2, 0.7], "ro-")
+    l1, = ax.plot([0.1, 0.5, 0.9], [0.1, 0.9, 0.5], "bo-")
+    l2, = ax.plot([0.1, 0.5, 0.9], [0.5, 0.2, 0.7], "ro-")
 
     gauss = DropShadowFilter(4)
 
@@ -211,13 +204,12 @@ def drop_shadow_line(ax):
         # draw shadows with same lines with slight offset.
         xx = l.get_xdata()
         yy = l.get_ydata()
-        (shadow,) = ax.plot(xx, yy)
+        shadow, = ax.plot(xx, yy)
         shadow.update_from(l)
 
         # offset transform
-        ot = mtransforms.offset_copy(
-            l.get_transform(), ax.figure, x=4.0, y=-6.0, units="points"
-        )
+        ot = mtransforms.offset_copy(l.get_transform(), ax.figure,
+                                     x=4.0, y=-6.0, units='points')
 
         shadow.set_transform(ot)
 
@@ -227,8 +219,8 @@ def drop_shadow_line(ax):
         shadow.set_agg_filter(gauss)
         shadow.set_rasterized(True)  # to support mixed-mode renderers
 
-    ax.set_xlim(0.0, 1.0)
-    ax.set_ylim(0.0, 1.0)
+    ax.set_xlim(0., 1.)
+    ax.set_ylim(0., 1.)
 
     ax.xaxis.set_visible(False)
     ax.yaxis.set_visible(False)
@@ -242,10 +234,11 @@ def drop_shadow_patches(ax):
     ind = np.arange(N)  # the x locations for the groups
     width = 0.35  # the width of the bars
 
-    rects1 = ax.bar(ind, men_means, width, color="r", ec="w", lw=2)
+    rects1 = ax.bar(ind, men_means, width, color='r', ec="w", lw=2)
 
     women_means = [25, 32, 34, 20, 25]
-    rects2 = ax.bar(ind + width + 0.1, women_means, width, color="y", ec="w", lw=2)
+    rects2 = ax.bar(ind + width + 0.1, women_means, width,
+                    color='y', ec="w", lw=2)
 
     # gauss = GaussianFilter(1.5, offsets=(1, 1))
     gauss = DropShadowFilter(5, offsets=(1, 1))
@@ -268,7 +261,8 @@ def light_filter_pie(ax):
     for p in pies[0]:
         p.set_agg_filter(light_filter)
         p.set_rasterized(True)  # to support mixed-mode renderers
-        p.set(ec="none", lw=2)
+        p.set(ec="none",
+              lw=2)
 
     gauss = DropShadowFilter(9, offsets=(3, 4), alpha=0.7)
     shadow = FilteredArtistList(pies[0], gauss)

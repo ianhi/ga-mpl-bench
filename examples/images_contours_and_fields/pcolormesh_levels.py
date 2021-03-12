@@ -3,7 +3,7 @@
 pcolormesh
 ==========
 
-`.axes.Axes.pcolormesh` allows you to generate 2D image-style plots.  Note it
+`.axes.Axes.pcolormesh` allows you to generate 2-D image-style plots.  Note it
 is faster than the similar `~.axes.Axes.pcolor`.
 
 """
@@ -51,21 +51,20 @@ ax.pcolormesh(X, Y, Z)
 # ---------------------
 #
 # Often a user wants to pass *X* and *Y* with the same sizes as *Z* to
-# `.axes.Axes.pcolormesh`. This is also allowed if ``shading='auto'`` is
-# passed (default set by :rc:`pcolor.shading`). Pre Matplotlib 3.3,
+# `.axes.Axes.pcolormesh`.  This is also allowed if ``shading='auto'`` is
+# passed (default set by :rc:`pcolor.shading`).  Pre Matplotlib 3.3,
 # ``shading='flat'`` would drop the last column and row of *Z*; while that
 # is still allowed for back compatibility purposes, a DeprecationWarning is
-# raised. If this is really what you want, then simply drop the last row and
-# column of Z manually:
+# raised.
 
 x = np.arange(10)  # len = 10
 y = np.arange(6)  # len = 6
 X, Y = np.meshgrid(x, y)
 
 fig, axs = plt.subplots(2, 1, sharex=True, sharey=True)
-axs[0].pcolormesh(X, Y, Z, vmin=np.min(Z), vmax=np.max(Z), shading="auto")
+axs[0].pcolormesh(X, Y, Z, vmin=np.min(Z), vmax=np.max(Z), shading='auto')
 axs[0].set_title("shading='auto' = 'nearest'")
-axs[1].pcolormesh(X, Y, Z[:-1, :-1], vmin=np.min(Z), vmax=np.max(Z), shading="flat")
+axs[1].pcolormesh(X, Y, Z, vmin=np.min(Z), vmax=np.max(Z), shading='flat')
 axs[1].set_title("shading='flat'")
 
 ###############################################################################
@@ -81,9 +80,10 @@ axs[1].set_title("shading='flat'")
 dx, dy = 0.05, 0.05
 
 # generate 2 2d grids for the x & y bounds
-y, x = np.mgrid[slice(1, 5 + dy, dy), slice(1, 5 + dx, dx)]
+y, x = np.mgrid[slice(1, 5 + dy, dy),
+                slice(1, 5 + dx, dx)]
 
-z = np.sin(x) ** 10 + np.cos(10 + y * x) * np.cos(x)
+z = np.sin(x)**10 + np.cos(10 + y*x) * np.cos(x)
 
 # x and y are bounds, so z should be the value *inside* those bounds.
 # Therefore, remove the last value from the z array.
@@ -93,23 +93,23 @@ levels = MaxNLocator(nbins=15).tick_values(z.min(), z.max())
 
 # pick the desired colormap, sensible levels, and define a normalization
 # instance which takes data values and translates those into levels.
-cmap = plt.get_cmap("PiYG")
+cmap = plt.get_cmap('PiYG')
 norm = BoundaryNorm(levels, ncolors=cmap.N, clip=True)
 
 fig, (ax0, ax1) = plt.subplots(nrows=2)
 
 im = ax0.pcolormesh(x, y, z, cmap=cmap, norm=norm)
 fig.colorbar(im, ax=ax0)
-ax0.set_title("pcolormesh with levels")
+ax0.set_title('pcolormesh with levels')
 
 
 # contours are *point* based plots, so convert our bound into point
 # centers
-cf = ax1.contourf(
-    x[:-1, :-1] + dx / 2.0, y[:-1, :-1] + dy / 2.0, z, levels=levels, cmap=cmap
-)
+cf = ax1.contourf(x[:-1, :-1] + dx/2.,
+                  y[:-1, :-1] + dy/2., z, levels=levels,
+                  cmap=cmap)
 fig.colorbar(cf, ax=ax1)
-ax1.set_title("contourf with levels")
+ax1.set_title('contourf with levels')
 
 # adjust spacing between subplots so `ax1` title and `ax0` tick labels
 # don't overlap

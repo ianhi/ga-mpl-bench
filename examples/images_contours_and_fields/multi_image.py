@@ -15,7 +15,7 @@ Nr = 3
 Nc = 2
 
 fig, axs = plt.subplots(Nr, Nc)
-fig.suptitle("Multiple images")
+fig.suptitle('Multiple images')
 
 images = []
 for i in range(Nr):
@@ -32,7 +32,7 @@ norm = colors.Normalize(vmin=vmin, vmax=vmax)
 for im in images:
     im.set_norm(norm)
 
-fig.colorbar(images[0], ax=axs, orientation="horizontal", fraction=0.1)
+fig.colorbar(images[0], ax=axs, orientation='horizontal', fraction=.1)
 
 
 # Make images respond to changes in the norm of other images (e.g. via the
@@ -40,16 +40,14 @@ fig.colorbar(images[0], ax=axs, orientation="horizontal", fraction=0.1)
 # recurse infinitely!
 def update(changed_image):
     for im in images:
-        if (
-            changed_image.get_cmap() != im.get_cmap()
-            or changed_image.get_clim() != im.get_clim()
-        ):
+        if (changed_image.get_cmap() != im.get_cmap()
+                or changed_image.get_clim() != im.get_clim()):
             im.set_cmap(changed_image.get_cmap())
             im.set_clim(changed_image.get_clim())
 
 
 for im in images:
-    im.callbacksSM.connect("changed", update)
+    im.callbacksSM.connect('changed', update)
 
 plt.show()
 
@@ -64,7 +62,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.imshow
 matplotlib.pyplot.imshow
 matplotlib.figure.Figure.colorbar

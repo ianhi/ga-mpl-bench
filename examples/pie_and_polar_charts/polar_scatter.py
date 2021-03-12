@@ -17,12 +17,12 @@ np.random.seed(19680801)
 N = 150
 r = 2 * np.random.rand(N)
 theta = 2 * np.pi * np.random.rand(N)
-area = 200 * r ** 2
+area = 200 * r**2
 colors = theta
 
 fig = plt.figure()
-ax = fig.add_subplot(projection="polar")
-c = ax.scatter(theta, r, c=colors, s=area, cmap="hsv", alpha=0.75)
+ax = fig.add_subplot(111, projection='polar')
+c = ax.scatter(theta, r, c=colors, s=area, cmap='hsv', alpha=0.75)
 
 ###############################################################################
 # Scatter plot on polar axis, with offset origin
@@ -33,11 +33,11 @@ c = ax.scatter(theta, r, c=colors, s=area, cmap="hsv", alpha=0.75)
 # rotate the plot.
 
 fig = plt.figure()
-ax = fig.add_subplot(projection="polar")
-c = ax.scatter(theta, r, c=colors, s=area, cmap="hsv", alpha=0.75)
+ax = fig.add_subplot(111, polar=True)
+c = ax.scatter(theta, r, c=colors, s=area, cmap='hsv', alpha=0.75)
 
 ax.set_rorigin(-2.5)
-ax.set_theta_zero_location("W", offset=10)
+ax.set_theta_zero_location('W', offset=10)
 
 ###############################################################################
 # Scatter plot on polar axis confined to a sector
@@ -47,8 +47,8 @@ ax.set_theta_zero_location("W", offset=10)
 # theta start and end limits, producing a sector instead of a full circle.
 
 fig = plt.figure()
-ax = fig.add_subplot(projection="polar")
-c = ax.scatter(theta, r, c=colors, s=area, cmap="hsv", alpha=0.75)
+ax = fig.add_subplot(111, polar=True)
+c = ax.scatter(theta, r, c=colors, s=area, cmap='hsv', alpha=0.75)
 
 ax.set_thetamin(45)
 ax.set_thetamax(135)
@@ -66,7 +66,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.scatter
 matplotlib.pyplot.scatter
 matplotlib.projections.polar

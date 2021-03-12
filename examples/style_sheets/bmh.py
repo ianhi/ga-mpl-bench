@@ -16,17 +16,12 @@ import matplotlib.pyplot as plt
 # Fixing random state for reproducibility
 np.random.seed(19680801)
 
-plt.style.use("bmh")
+plt.style.use('bmh')
 
 
 def plot_beta_hist(ax, a, b):
-    ax.hist(
-        np.random.beta(a, b, size=10000),
-        histtype="stepfilled",
-        bins=25,
-        alpha=0.8,
-        density=True,
-    )
+    ax.hist(np.random.beta(a, b, size=10000),
+            histtype="stepfilled", bins=25, alpha=0.8, density=True)
 
 
 fig, ax = plt.subplots()

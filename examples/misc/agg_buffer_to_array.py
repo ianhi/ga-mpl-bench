@@ -17,7 +17,7 @@ fig = Figure()
 canvas = FigureCanvas(fig)
 ax = fig.subplots()
 ax.plot([1, 2, 3])
-ax.set_title("a simple figure")
+ax.set_title('a simple figure')
 # Force a draw so we can grab the pixel buffer
 canvas.draw()
 # grab the pixel buffer and dump it into a numpy array
@@ -25,6 +25,6 @@ X = np.array(canvas.renderer.buffer_rgba())
 
 # now display the array X as an Axes in a new figure
 fig2 = plt.figure()
-ax2 = fig2.add_subplot(frameon=False)
+ax2 = fig2.add_subplot(111, frameon=False)
 ax2.imshow(X)
 plt.show()

@@ -15,7 +15,6 @@ fig, ax = plt.subplots()
 def f(x, y):
     return np.sin(x) + np.cos(y)
 
-
 x = np.linspace(0, 2 * np.pi, 120)
 y = np.linspace(0, 2 * np.pi, 100).reshape(-1, 1)
 
@@ -24,14 +23,15 @@ y = np.linspace(0, 2 * np.pi, 100).reshape(-1, 1)
 # each frame
 ims = []
 for i in range(60):
-    x += np.pi / 15.0
-    y += np.pi / 20.0
+    x += np.pi / 15.
+    y += np.pi / 20.
     im = ax.imshow(f(x, y), animated=True)
     if i == 0:
         ax.imshow(f(x, y))  # show an initial one first
     ims.append([im])
 
-ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True, repeat_delay=1000)
+ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
+                                repeat_delay=1000)
 
 # To save the animation, use e.g.
 #

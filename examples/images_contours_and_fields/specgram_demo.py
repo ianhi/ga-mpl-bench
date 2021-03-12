@@ -47,6 +47,5 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.specgram
 matplotlib.pyplot.specgram

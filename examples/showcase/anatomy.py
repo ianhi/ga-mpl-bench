@@ -13,8 +13,8 @@ from matplotlib.ticker import AutoMinorLocator, MultipleLocator
 np.random.seed(19680801)
 
 X = np.linspace(0.5, 3.5, 100)
-Y1 = 3 + np.cos(X)
-Y2 = 1 + np.cos(1 + X / 0.75) / 2
+Y1 = 3+np.cos(X)
+Y2 = 1+np.cos(1+X/0.75)/2
 Y3 = np.random.uniform(Y1, Y2, len(X))
 
 fig = plt.figure(figsize=(8, 8))
@@ -26,7 +26,6 @@ def minor_tick(x, pos):
         return ""
     return f"{x:.2f}"
 
-
 ax.xaxis.set_major_locator(MultipleLocator(1.000))
 ax.xaxis.set_minor_locator(AutoMinorLocator(4))
 ax.yaxis.set_major_locator(MultipleLocator(1.000))
@@ -37,18 +36,19 @@ ax.xaxis.set_minor_formatter(minor_tick)
 ax.set_xlim(0, 4)
 ax.set_ylim(0, 4)
 
-ax.tick_params(which="major", width=1.0)
-ax.tick_params(which="major", length=10)
-ax.tick_params(which="minor", width=1.0, labelsize=10)
-ax.tick_params(which="minor", length=5, labelsize=10, labelcolor="0.25")
+ax.tick_params(which='major', width=1.0)
+ax.tick_params(which='major', length=10)
+ax.tick_params(which='minor', width=1.0, labelsize=10)
+ax.tick_params(which='minor', length=5, labelsize=10, labelcolor='0.25')
 
-ax.grid(linestyle="--", linewidth=0.5, color=".25", zorder=-10)
+ax.grid(linestyle="--", linewidth=0.5, color='.25', zorder=-10)
 
 ax.plot(X, Y1, c=(0.25, 0.25, 1.00), lw=2, label="Blue signal", zorder=10)
 ax.plot(X, Y2, c=(1.00, 0.25, 0.25), lw=2, label="Red signal")
-ax.plot(X, Y3, linewidth=0, marker="o", markerfacecolor="w", markeredgecolor="k")
+ax.plot(X, Y3, linewidth=0,
+        marker='o', markerfacecolor='w', markeredgecolor='k')
 
-ax.set_title("Anatomy of a figure", fontsize=20, verticalalignment="bottom")
+ax.set_title("Anatomy of a figure", fontsize=20, verticalalignment='bottom')
 ax.set_xlabel("X axis label")
 ax.set_ylabel("Y axis label")
 
@@ -58,31 +58,15 @@ ax.legend()
 def circle(x, y, radius=0.15):
     from matplotlib.patches import Circle
     from matplotlib.patheffects import withStroke
-
-    circle = Circle(
-        (x, y),
-        radius,
-        clip_on=False,
-        zorder=10,
-        linewidth=1,
-        edgecolor="black",
-        facecolor=(0, 0, 0, 0.0125),
-        path_effects=[withStroke(linewidth=5, foreground="w")],
-    )
+    circle = Circle((x, y), radius, clip_on=False, zorder=10, linewidth=1,
+                    edgecolor='black', facecolor=(0, 0, 0, .0125),
+                    path_effects=[withStroke(linewidth=5, foreground='w')])
     ax.add_artist(circle)
 
 
 def text(x, y, text):
-    ax.text(
-        x,
-        y,
-        text,
-        backgroundcolor="white",
-        ha="center",
-        va="top",
-        weight="bold",
-        color="blue",
-    )
+    ax.text(x, y, text, backgroundcolor="white",
+            ha='center', va='top', weight='bold', color='blue')
 
 
 # Minor tick
@@ -141,28 +125,21 @@ text(0.5, 0.3, "Axes")
 circle(-0.3, 0.65)
 text(-0.3, 0.45, "Figure")
 
-color = "blue"
-ax.annotate(
-    "Spines",
-    xy=(4.0, 0.35),
-    xytext=(3.3, 0.5),
-    weight="bold",
-    color=color,
-    arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color=color),
-)
+color = 'blue'
+ax.annotate('Spines', xy=(4.0, 0.35), xytext=(3.3, 0.5),
+            weight='bold', color=color,
+            arrowprops=dict(arrowstyle='->',
+                            connectionstyle="arc3",
+                            color=color))
 
-ax.annotate(
-    "",
-    xy=(3.15, 0.0),
-    xytext=(3.45, 0.45),
-    weight="bold",
-    color=color,
-    arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color=color),
-)
+ax.annotate('', xy=(3.15, 0.0), xytext=(3.45, 0.45),
+            weight='bold', color=color,
+            arrowprops=dict(arrowstyle='->',
+                            connectionstyle="arc3",
+                            color=color))
 
-ax.text(
-    4.0, -0.4, "Made with https://matplotlib.org", fontsize=10, ha="right", color=".5"
-)
+ax.text(4.0, -0.4, "Made with https://matplotlib.org",
+        fontsize=10, ha="right", color='.5')
 
 plt.show()
 
@@ -178,7 +155,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.pyplot.figure
 matplotlib.axes.Axes.text
 matplotlib.axis.Axis.set_minor_formatter

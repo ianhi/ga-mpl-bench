@@ -25,21 +25,17 @@ x = r * np.cos(t)
 y = r * np.sin(t)
 
 fig, ax = plt.subplots(figsize=(6, 6))
-circle = Circle(
-    (0, 0), 1, facecolor="none", edgecolor=(0, 0.8, 0.8), linewidth=3, alpha=0.5
-)
+circle = Circle((0, 0), 1, facecolor='none',
+                edgecolor=(0, 0.8, 0.8), linewidth=3, alpha=0.5)
 ax.add_patch(circle)
 
-im = plt.imshow(
-    np.random.random((100, 100)),
-    origin="lower",
-    cmap=cm.winter,
-    interpolation="spline36",
-    extent=([-1, 1, -1, 1]),
-)
+im = plt.imshow(np.random.random((100, 100)),
+                origin='lower', cmap=cm.winter,
+                interpolation='spline36',
+                extent=([-1, 1, -1, 1]))
 im.set_clip_path(circle)
 
-plt.plot(x, y, "o", color=(0.9, 0.9, 1.0), alpha=0.8)
+plt.plot(x, y, 'o', color=(0.9, 0.9, 1.0), alpha=0.8)
 
 # Dolphin from OpenClipart library by Andy Fitzsimon
 #   <cc:License rdf:about="http://web.resource.org/cc/PublicDomain">
@@ -79,31 +75,30 @@ codes = []
 parts = dolphin.split()
 i = 0
 code_map = {
-    "M": Path.MOVETO,
-    "C": Path.CURVE4,
-    "L": Path.LINETO,
+    'M': Path.MOVETO,
+    'C': Path.CURVE4,
+    'L': Path.LINETO,
 }
 
 while i < len(parts):
     path_code = code_map[parts[i]]
     npoints = Path.NUM_VERTICES_FOR_CODE[path_code]
     codes.extend([path_code] * npoints)
-    vertices.extend([[*map(float, y.split(","))] for y in parts[i + 1 :][:npoints]])
+    vertices.extend([[*map(float, y.split(','))]
+                     for y in parts[i + 1:][:npoints]])
     i += npoints + 1
 vertices = np.array(vertices)
 vertices[:, 1] -= 160
 
 dolphin_path = Path(vertices, codes)
-dolphin_patch = PathPatch(
-    dolphin_path, facecolor=(0.6, 0.6, 0.6), edgecolor=(0.0, 0.0, 0.0)
-)
+dolphin_patch = PathPatch(dolphin_path, facecolor=(0.6, 0.6, 0.6),
+                          edgecolor=(0.0, 0.0, 0.0))
 ax.add_patch(dolphin_patch)
 
 vertices = Affine2D().rotate_deg(60).transform(vertices)
 dolphin_path2 = Path(vertices, codes)
-dolphin_patch2 = PathPatch(
-    dolphin_path2, facecolor=(0.5, 0.5, 0.5), edgecolor=(0.0, 0.0, 0.0)
-)
+dolphin_patch2 = PathPatch(dolphin_path2, facecolor=(0.5, 0.5, 0.5),
+                           edgecolor=(0.0, 0.0, 0.0))
 ax.add_patch(dolphin_patch2)
 
 plt.show()
@@ -119,7 +114,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.path
 matplotlib.path.Path
 matplotlib.patches

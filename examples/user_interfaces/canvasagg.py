@@ -30,7 +30,7 @@ fig = Figure(figsize=(5, 4), dpi=100)
 canvas = FigureCanvasAgg(fig)
 
 # Do some plotting.
-ax = fig.add_subplot()
+ax = fig.add_subplot(111)
 ax.plot([1, 2, 3])
 
 # Option 1: Save the figure to a file; can also be a file-like object (BytesIO,
@@ -44,7 +44,6 @@ buf = canvas.buffer_rgba()
 X = np.asarray(buf)
 # ... and pass it to PIL.
 from PIL import Image
-
 im = Image.fromarray(X)
 
 # Uncomment this line to display the image using ImageMagick's `display` tool.
@@ -61,7 +60,6 @@ im = Image.fromarray(X)
 # in this example:
 
 import matplotlib
-
 matplotlib.backends.backend_agg.FigureCanvasAgg
 matplotlib.figure.Figure
 matplotlib.figure.Figure.add_subplot

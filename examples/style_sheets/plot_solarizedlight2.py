@@ -16,7 +16,7 @@ and work of:
 
 using all 8 accents of the color palette - starting with blue
 
-Still TODO:
+ToDo:
 
 - Create alpha values for bar and stacked charts. .33 or .5
 - Apply Layout Rules
@@ -29,7 +29,7 @@ import numpy as np
 np.random.seed(19680801)
 
 x = np.linspace(0, 10)
-with plt.style.context("Solarize_Light2"):
+with plt.style.context('Solarize_Light2'):
     plt.plot(x, np.sin(x) + x + np.random.randn(50))
     plt.plot(x, np.sin(x) + 2 * x + np.random.randn(50))
     plt.plot(x, np.sin(x) + 3 * x + np.random.randn(50))
@@ -39,8 +39,8 @@ with plt.style.context("Solarize_Light2"):
     plt.plot(x, np.sin(x) + 7 * x + np.random.randn(50))
     plt.plot(x, np.sin(x) + 8 * x + np.random.randn(50))
     # Number of accent colors in the color scheme
-    plt.title("8 Random Lines - Line")
-    plt.xlabel("x label", fontsize=14)
-    plt.ylabel("y label", fontsize=14)
+    plt.title('8 Random Lines - Line')
+    plt.xlabel('x label', fontsize=14)
+    plt.ylabel('y label', fontsize=14)
 
 plt.show()

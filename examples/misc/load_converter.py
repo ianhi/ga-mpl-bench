@@ -13,18 +13,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-datafile = cbook.get_sample_data("msft.csv", asfileobj=False)
-print("loading", datafile)
+datafile = cbook.get_sample_data('msft.csv', asfileobj=False)
+print('loading', datafile)
 
 data = np.genfromtxt(
-    datafile,
-    delimiter=",",
-    names=True,
-    dtype=None,
-    converters={0: dateutil.parser.parse},
-)
+    datafile, delimiter=',', names=True,
+    dtype=None, converters={0: dateutil.parser.parse})
 
 fig, ax = plt.subplots()
-ax.plot(data["Date"], data["High"], "-")
+ax.plot(data['Date'], data['High'], '-')
 fig.autofmt_xdate()
 plt.show()

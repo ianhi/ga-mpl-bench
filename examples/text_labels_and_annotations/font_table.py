@@ -44,8 +44,8 @@ def print_glyphs(path):
     for char_code, glyph_index in charmap.items():
         char = chr(char_code)
         name = unicodedata.name(
-            char, f"{char_code:#x} ({font.get_glyph_name(glyph_index)})"
-        )
+                char,
+                f"{char_code:#x} ({font.get_glyph_name(glyph_index)})")
         print(f"{glyph_index:>{max_indices_len}} {char} {name}")
 
 
@@ -96,8 +96,8 @@ def draw_font_table(path):
         rowColours=["palegreen"] * 16,
         colColours=["palegreen"] * 16,
         cellColours=[[".95" for c in range(16)] for r in range(16)],
-        cellLoc="center",
-        loc="upper left",
+        cellLoc='center',
+        loc='upper left',
     )
     for key, cell in table.get_celld().items():
         row, col = key
@@ -113,11 +113,8 @@ if __name__ == "__main__":
 
     parser = ArgumentParser(description="Display a font table.")
     parser.add_argument("path", nargs="?", help="Path to the font file.")
-    parser.add_argument(
-        "--print-all",
-        action="store_true",
-        help="Additionally, print all chars to stdout.",
-    )
+    parser.add_argument("--print-all", action="store_true",
+                        help="Additionally, print all chars to stdout.")
     args = parser.parse_args()
 
     if args.print_all:

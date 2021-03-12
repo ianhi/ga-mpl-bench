@@ -24,9 +24,8 @@ plt.show()
 # control adapt the line objects returned by `~.pyplot`.
 
 markerline, stemlines, baseline = plt.stem(
-    x, y, linefmt="grey", markerfmt="D", bottom=1.1
-)
-markerline.set_markerfacecolor("none")
+    x, y, linefmt='grey', markerfmt='D', bottom=1.1)
+markerline.set_markerfacecolor('none')
 plt.show()
 
 #############################################################################
@@ -40,6 +39,5 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.pyplot.stem
 matplotlib.axes.Axes.stem

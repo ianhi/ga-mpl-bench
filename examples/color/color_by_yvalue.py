@@ -33,6 +33,5 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.plot
 matplotlib.pyplot.plot

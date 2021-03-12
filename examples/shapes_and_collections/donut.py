@@ -27,20 +27,21 @@ def make_circle(r):
     y = r * np.sin(t)
     return np.hstack((x, y))
 
-
 Path = mpath.Path
 
 fig, ax = plt.subplots()
 
 inside_vertices = make_circle(0.5)
 outside_vertices = make_circle(1.0)
-codes = np.ones(len(inside_vertices), dtype=mpath.Path.code_type) * mpath.Path.LINETO
+codes = np.ones(
+    len(inside_vertices), dtype=mpath.Path.code_type) * mpath.Path.LINETO
 codes[0] = mpath.Path.MOVETO
 
 for i, (inside, outside) in enumerate(((1, 1), (1, -1), (-1, 1), (-1, -1))):
     # Concatenate the inside and outside subpaths together, changing their
     # order as needed
-    vertices = np.concatenate((outside_vertices[::outside], inside_vertices[::inside]))
+    vertices = np.concatenate((outside_vertices[::outside],
+                               inside_vertices[::inside]))
     # Shift the path
     vertices[:, 0] += i * 2.5
     # The codes will be all "LINETO" commands, except for "MOVETO"s at the
@@ -49,19 +50,15 @@ for i, (inside, outside) in enumerate(((1, 1), (1, -1), (-1, 1), (-1, -1))):
     # Create the Path object
     path = mpath.Path(vertices, all_codes)
     # Add plot it
-    patch = mpatches.PathPatch(path, facecolor="#885500", edgecolor="black")
+    patch = mpatches.PathPatch(path, facecolor='#885500', edgecolor='black')
     ax.add_patch(patch)
 
-    ax.annotate(
-        "Outside %s,\nInside %s" % (wise(outside), wise(inside)),
-        (i * 2.5, -1.5),
-        va="top",
-        ha="center",
-    )
+    ax.annotate("Outside %s,\nInside %s" % (wise(outside), wise(inside)),
+                (i * 2.5, -1.5), va="top", ha="center")
 
 ax.set_xlim(-2, 10)
 ax.set_ylim(-3, 2)
-ax.set_title("Mmm, donuts!")
+ax.set_title('Mmm, donuts!')
 ax.set_aspect(1.0)
 plt.show()
 
@@ -76,7 +73,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.path
 matplotlib.path.Path
 matplotlib.patches

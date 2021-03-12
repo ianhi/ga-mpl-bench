@@ -27,7 +27,7 @@ fig, axs = plt.subplots(2, 1, sharex=True, sharey=True)
 
 # Create a continuous norm to map from data points to colors
 norm = plt.Normalize(dydx.min(), dydx.max())
-lc = LineCollection(segments, cmap="viridis", norm=norm)
+lc = LineCollection(segments, cmap='viridis', norm=norm)
 # Set the values used for colormapping
 lc.set_array(dydx)
 lc.set_linewidth(2)
@@ -35,7 +35,7 @@ line = axs[0].add_collection(lc)
 fig.colorbar(line, ax=axs[0])
 
 # Use a boundary norm instead
-cmap = ListedColormap(["r", "g", "b"])
+cmap = ListedColormap(['r', 'g', 'b'])
 norm = BoundaryNorm([-1, -0.5, 0.5, 1], cmap.N)
 lc = LineCollection(segments, cmap=cmap, norm=norm)
 lc.set_array(dydx)

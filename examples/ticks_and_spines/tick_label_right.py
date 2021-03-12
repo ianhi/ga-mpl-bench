@@ -12,8 +12,8 @@ These properties can also be set in the ``.matplotlib/matplotlibrc``.
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.rcParams["ytick.right"] = plt.rcParams["ytick.labelright"] = True
-plt.rcParams["ytick.left"] = plt.rcParams["ytick.labelleft"] = False
+plt.rcParams['ytick.right'] = plt.rcParams['ytick.labelright'] = True
+plt.rcParams['ytick.left'] = plt.rcParams['ytick.labelleft'] = False
 
 x = np.arange(10)
 

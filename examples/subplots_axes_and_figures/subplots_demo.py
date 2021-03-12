@@ -31,7 +31,7 @@ y = np.sin(x ** 2)
 
 fig, ax = plt.subplots()
 ax.plot(x, y)
-ax.set_title("A single plot")
+ax.set_title('A single plot')
 
 ###############################################################################
 # Stacking subplots in one direction
@@ -44,7 +44,7 @@ ax.set_title("A single plot")
 # containing the list of created Axes.
 
 fig, axs = plt.subplots(2)
-fig.suptitle("Vertically stacked subplots")
+fig.suptitle('Vertically stacked subplots')
 axs[0].plot(x, y)
 axs[1].plot(x, -y)
 
@@ -54,7 +54,7 @@ axs[1].plot(x, -y)
 # the more verbose ``axs[0]``.
 
 fig, (ax1, ax2) = plt.subplots(2)
-fig.suptitle("Vertically stacked subplots")
+fig.suptitle('Vertically stacked subplots')
 ax1.plot(x, y)
 ax2.plot(x, -y)
 
@@ -63,7 +63,7 @@ ax2.plot(x, -y)
 # columns.
 
 fig, (ax1, ax2) = plt.subplots(1, 2)
-fig.suptitle("Horizontally stacked subplots")
+fig.suptitle('Horizontally stacked subplots')
 ax1.plot(x, y)
 ax2.plot(x, -y)
 
@@ -78,16 +78,16 @@ ax2.plot(x, -y)
 
 fig, axs = plt.subplots(2, 2)
 axs[0, 0].plot(x, y)
-axs[0, 0].set_title("Axis [0, 0]")
-axs[0, 1].plot(x, y, "tab:orange")
-axs[0, 1].set_title("Axis [0, 1]")
-axs[1, 0].plot(x, -y, "tab:green")
-axs[1, 0].set_title("Axis [1, 0]")
-axs[1, 1].plot(x, -y, "tab:red")
-axs[1, 1].set_title("Axis [1, 1]")
+axs[0, 0].set_title('Axis [0, 0]')
+axs[0, 1].plot(x, y, 'tab:orange')
+axs[0, 1].set_title('Axis [0, 1]')
+axs[1, 0].plot(x, -y, 'tab:green')
+axs[1, 0].set_title('Axis [1, 0]')
+axs[1, 1].plot(x, -y, 'tab:red')
+axs[1, 1].set_title('Axis [1, 1]')
 
 for ax in axs.flat:
-    ax.set(xlabel="x-label", ylabel="y-label")
+    ax.set(xlabel='x-label', ylabel='y-label')
 
 # Hide x labels and tick labels for top plots and y ticks for right plots.
 for ax in axs.flat:
@@ -98,11 +98,11 @@ for ax in axs.flat:
 # variables:
 
 fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
-fig.suptitle("Sharing x per column, y per row")
+fig.suptitle('Sharing x per column, y per row')
 ax1.plot(x, y)
-ax2.plot(x, y ** 2, "tab:orange")
-ax3.plot(x, -y, "tab:green")
-ax4.plot(x, -(y ** 2), "tab:red")
+ax2.plot(x, y**2, 'tab:orange')
+ax3.plot(x, -y, 'tab:green')
+ax4.plot(x, -y**2, 'tab:red')
 
 for ax in fig.get_axes():
     ax.label_outer()
@@ -115,7 +115,7 @@ for ax in fig.get_axes():
 # different the tick values of the subplots do not align.
 
 fig, (ax1, ax2) = plt.subplots(2)
-fig.suptitle("Axes values are scaled individually by default")
+fig.suptitle('Axes values are scaled individually by default')
 ax1.plot(x, y)
 ax2.plot(x + 1, -y)
 
@@ -123,7 +123,7 @@ ax2.plot(x + 1, -y)
 # You can use *sharex* or *sharey* to align the horizontal or vertical axis.
 
 fig, (ax1, ax2) = plt.subplots(2, sharex=True)
-fig.suptitle("Aligning x-axis using sharex")
+fig.suptitle('Aligning x-axis using sharex')
 ax1.plot(x, y)
 ax2.plot(x + 1, -y)
 
@@ -133,10 +133,10 @@ ax2.plot(x + 1, -y)
 # same scale when using ``sharey=True``.
 
 fig, axs = plt.subplots(3, sharex=True, sharey=True)
-fig.suptitle("Sharing both axes")
+fig.suptitle('Sharing both axes')
 axs[0].plot(x, y ** 2)
-axs[1].plot(x, 0.3 * y, "o")
-axs[2].plot(x, y, "+")
+axs[1].plot(x, 0.3 * y, 'o')
+axs[2].plot(x, y, '+')
 
 ###############################################################################
 # For subplots that are sharing axes one set of tick labels is enough. Tick
@@ -144,7 +144,7 @@ axs[2].plot(x, y, "+")
 # Still there remains an unused empty space between the subplots.
 #
 # To precisely control the positioning of the subplots, one can explicitly
-# create a `.GridSpec` with `.Figure.add_gridspec`, and then call its
+# create a `.GridSpec` with `.add_gridspec`, and then call its
 # `~.GridSpecBase.subplots` method.  For example, we can reduce the height
 # between vertical subplots using ``add_gridspec(hspace=0)``.
 #
@@ -154,10 +154,10 @@ axs[2].plot(x, y, "+")
 fig = plt.figure()
 gs = fig.add_gridspec(3, hspace=0)
 axs = gs.subplots(sharex=True, sharey=True)
-fig.suptitle("Sharing both axes")
+fig.suptitle('Sharing both axes')
 axs[0].plot(x, y ** 2)
-axs[1].plot(x, 0.3 * y, "o")
-axs[2].plot(x, y, "+")
+axs[1].plot(x, 0.3 * y, 'o')
+axs[2].plot(x, y, '+')
 
 # Hide x labels and tick labels for all but bottom plot.
 for ax in axs:
@@ -169,12 +169,12 @@ for ax in axs:
 
 fig = plt.figure()
 gs = fig.add_gridspec(2, 2, hspace=0, wspace=0)
-(ax1, ax2), (ax3, ax4) = gs.subplots(sharex="col", sharey="row")
-fig.suptitle("Sharing x per column, y per row")
+(ax1, ax2), (ax3, ax4) = gs.subplots(sharex='col', sharey='row')
+fig.suptitle('Sharing x per column, y per row')
 ax1.plot(x, y)
-ax2.plot(x, y ** 2, "tab:orange")
-ax3.plot(x + 1, -y, "tab:green")
-ax4.plot(x + 2, -(y ** 2), "tab:red")
+ax2.plot(x, y**2, 'tab:orange')
+ax3.plot(x + 1, -y, 'tab:green')
+ax4.plot(x + 2, -y**2, 'tab:red')
 
 for ax in axs.flat:
     ax.label_outer()
@@ -187,7 +187,7 @@ for ax in axs.flat:
 fig, axs = plt.subplots(2, 2)
 axs[0, 0].plot(x, y)
 axs[0, 0].set_title("main")
-axs[1, 0].plot(x, y ** 2)
+axs[1, 0].plot(x, y**2)
 axs[1, 0].set_title("shares x with main")
 axs[1, 0].sharex(axs[0, 0])
 axs[0, 1].plot(x + 1, y + 1)
@@ -204,7 +204,7 @@ fig.tight_layout()
 # properties (see also `.Figure.add_subplot`). In particular, this can be used
 # to create a grid of polar Axes.
 
-fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw=dict(projection="polar"))
+fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw=dict(projection='polar'))
 ax1.plot(x, y)
 ax2.plot(x, y ** 2)
 

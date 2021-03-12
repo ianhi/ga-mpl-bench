@@ -20,14 +20,13 @@ def koch_snowflake(order, scale=10):
     """
     Return two lists x, y of point coordinates of the Koch snowflake.
 
-    Parameters
-    ----------
+    Arguments
+    ---------
     order : int
         The recursion depth.
     scale : float
         The extent of the snowflake (edge length of the base triangle).
     """
-
     def _koch_snowflake_complex(order):
         if order == 0:
             # initial triangle
@@ -58,7 +57,7 @@ def koch_snowflake(order, scale=10):
 x, y = koch_snowflake(order=5)
 
 plt.figure(figsize=(8, 8))
-plt.axis("equal")
+plt.axis('equal')
 plt.fill(x, y)
 plt.show()
 
@@ -69,12 +68,11 @@ plt.show()
 
 x, y = koch_snowflake(order=2)
 
-fig, (ax1, ax2, ax3) = plt.subplots(
-    1, 3, figsize=(9, 3), subplot_kw={"aspect": "equal"}
-)
+fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(9, 3),
+                                    subplot_kw={'aspect': 'equal'})
 ax1.fill(x, y)
-ax2.fill(x, y, facecolor="lightsalmon", edgecolor="orangered", linewidth=3)
-ax3.fill(x, y, facecolor="none", edgecolor="purple", linewidth=3)
+ax2.fill(x, y, facecolor='lightsalmon', edgecolor='orangered', linewidth=3)
+ax3.fill(x, y, facecolor='none', edgecolor='purple', linewidth=3)
 
 plt.show()
 
@@ -89,7 +87,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.fill
 matplotlib.pyplot.fill
 matplotlib.axes.Axes.axis

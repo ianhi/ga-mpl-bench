@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 np.random.seed(19680801)
 
 
-X = 10 * np.random.rand(5, 3)
+X = 10*np.random.rand(5, 3)
 
 fig, ax = plt.subplots()
 ax.imshow(X)
@@ -29,10 +29,9 @@ def format_coord(x, y):
     row = int(y + 0.5)
     if 0 <= col < numcols and 0 <= row < numrows:
         z = X[row, col]
-        return "x=%1.4f, y=%1.4f, z=%1.4f" % (x, y, z)
+        return 'x=%1.4f, y=%1.4f, z=%1.4f' % (x, y, z)
     else:
-        return "x=%1.4f, y=%1.4f" % (x, y)
-
+        return 'x=%1.4f, y=%1.4f' % (x, y)
 
 ax.format_coord = format_coord
 plt.show()
@@ -48,6 +47,5 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.format_coord
 matplotlib.axes.Axes.imshow

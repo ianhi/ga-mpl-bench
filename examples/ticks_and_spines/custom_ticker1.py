@@ -18,13 +18,12 @@ money = [1.5e5, 2.5e6, 5.5e6, 2.0e7]
 
 def millions(x, pos):
     """The two args are the value and tick position."""
-    return "${:1.1f}M".format(x * 1e-6)
-
+    return '${:1.1f}M'.format(x*1e-6)
 
 fig, ax = plt.subplots()
 # Use automatic FuncFormatter creation
 ax.yaxis.set_major_formatter(millions)
-ax.bar(["Bill", "Fred", "Mary", "Sue"], money)
+ax.bar(['Bill', 'Fred', 'Mary', 'Sue'], money)
 plt.show()
 
 #############################################################################
@@ -38,7 +37,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.pyplot.subplots
 matplotlib.axis.Axis.set_major_formatter
 matplotlib.ticker.FuncFormatter

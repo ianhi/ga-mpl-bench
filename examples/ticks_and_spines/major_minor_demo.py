@@ -33,7 +33,7 @@ axis (because the locator stores references to the axis data and view limits).
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import MultipleLocator, AutoMinorLocator
+from matplotlib.ticker import (MultipleLocator, AutoMinorLocator)
 
 
 t = np.arange(0.0, 100.0, 0.1)
@@ -47,7 +47,7 @@ ax.plot(t, s)
 # minor ticks.  The string is used directly, the `StrMethodFormatter` is
 # created automatically.
 ax.xaxis.set_major_locator(MultipleLocator(20))
-ax.xaxis.set_major_formatter("{x:.0f}")
+ax.xaxis.set_major_formatter('{x:.0f}')
 
 # For the minor ticks, use no labels; default NullFormatter.
 ax.xaxis.set_minor_locator(MultipleLocator(5))
@@ -73,9 +73,9 @@ ax.plot(t, s)
 
 ax.xaxis.set_minor_locator(AutoMinorLocator())
 
-ax.tick_params(which="both", width=2)
-ax.tick_params(which="major", length=7)
-ax.tick_params(which="minor", length=4, color="r")
+ax.tick_params(which='both', width=2)
+ax.tick_params(which='major', length=7)
+ax.tick_params(which='minor', length=4, color='r')
 
 plt.show()
 
@@ -91,7 +91,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.pyplot.subplots
 matplotlib.axis.Axis.set_major_formatter
 matplotlib.axis.Axis.set_major_locator

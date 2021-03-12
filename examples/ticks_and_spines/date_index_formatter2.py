@@ -18,18 +18,15 @@ from matplotlib.ticker import Formatter
 import numpy as np
 
 
-datafile = cbook.get_sample_data("msft.csv", asfileobj=False)
-print("loading %s" % datafile)
+datafile = cbook.get_sample_data('msft.csv', asfileobj=False)
+print('loading %s' % datafile)
 msft_data = np.genfromtxt(
-    datafile,
-    delimiter=",",
-    names=True,
-    converters={0: lambda s: dates.date2num(dateutil.parser.parse(s))},
-)
+    datafile, delimiter=',', names=True,
+    converters={0: lambda s: dates.date2num(dateutil.parser.parse(s))})
 
 
 class MyFormatter(Formatter):
-    def __init__(self, dates, fmt="%Y-%m-%d"):
+    def __init__(self, dates, fmt='%Y-%m-%d'):
         self.dates = dates
         self.fmt = fmt
 
@@ -37,12 +34,12 @@ class MyFormatter(Formatter):
         """Return the label for time x at position pos."""
         ind = int(round(x))
         if ind >= len(self.dates) or ind < 0:
-            return ""
+            return ''
         return dates.num2date(self.dates[ind]).strftime(self.fmt)
 
 
 fig, ax = plt.subplots()
-ax.xaxis.set_major_formatter(MyFormatter(msft_data["Date"]))
-ax.plot(msft_data["Close"], "o-")
+ax.xaxis.set_major_formatter(MyFormatter(msft_data['Date']))
+ax.plot(msft_data['Close'], 'o-')
 fig.autofmt_xdate()
 plt.show()

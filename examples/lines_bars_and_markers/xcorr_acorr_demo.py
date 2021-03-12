@@ -35,7 +35,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.acorr
 matplotlib.axes.Axes.xcorr
 matplotlib.pyplot.acorr

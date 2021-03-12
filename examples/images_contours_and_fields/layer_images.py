@@ -10,7 +10,7 @@ import numpy as np
 
 
 def func3(x, y):
-    return (1 - x / 2 + x ** 5 + y ** 3) * np.exp(-(x ** 2 + y ** 2))
+    return (1 - x / 2 + x**5 + y**3) * np.exp(-(x**2 + y**2))
 
 
 # make these smaller to increase the resolution
@@ -31,13 +31,13 @@ extent = np.min(x), np.max(x), np.min(y), np.max(y)
 fig = plt.figure(frameon=False)
 
 Z1 = np.add.outer(range(8), range(8)) % 2  # chessboard
-im1 = plt.imshow(Z1, cmap=plt.cm.gray, interpolation="nearest", extent=extent)
+im1 = plt.imshow(Z1, cmap=plt.cm.gray, interpolation='nearest',
+                 extent=extent)
 
 Z2 = func3(X, Y)
 
-im2 = plt.imshow(
-    Z2, cmap=plt.cm.viridis, alpha=0.9, interpolation="bilinear", extent=extent
-)
+im2 = plt.imshow(Z2, cmap=plt.cm.viridis, alpha=.9, interpolation='bilinear',
+                 extent=extent)
 
 plt.show()
 
@@ -52,6 +52,5 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.imshow
 matplotlib.pyplot.imshow

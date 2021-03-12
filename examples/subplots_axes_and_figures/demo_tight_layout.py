@@ -22,9 +22,9 @@ fontsizes = itertools.cycle([8, 16, 24, 32])
 
 def example_plot(ax):
     ax.plot([1, 2])
-    ax.set_xlabel("x-label", fontsize=next(fontsizes))
-    ax.set_ylabel("y-label", fontsize=next(fontsizes))
-    ax.set_title("Title", fontsize=next(fontsizes))
+    ax.set_xlabel('x-label', fontsize=next(fontsizes))
+    ax.set_ylabel('y-label', fontsize=next(fontsizes))
+    ax.set_title('Title', fontsize=next(fontsizes))
 
 
 ###############################################################################
@@ -143,7 +143,6 @@ plt.show()
 # The use of the following functions and methods is shown in this example:
 
 import matplotlib
-
 matplotlib.pyplot.tight_layout
 matplotlib.figure.Figure.tight_layout
 matplotlib.figure.Figure.add_gridspec

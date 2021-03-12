@@ -41,13 +41,13 @@ ax.set_ylim(ys.min(), ys.max())
 # onoffseq is an even length tuple of on and off ink in points.  If linestyle
 # is omitted, 'solid' is used.
 # See `matplotlib.collections.LineCollection` for more information.
-colors = [mcolors.to_rgba(c) for c in plt.rcParams["axes.prop_cycle"].by_key()["color"]]
+colors = [mcolors.to_rgba(c)
+          for c in plt.rcParams['axes.prop_cycle'].by_key()['color']]
 
-line_segments = LineCollection(
-    segs, linewidths=(0.5, 1, 1.5, 2), colors=colors, linestyle="solid"
-)
+line_segments = LineCollection(segs, linewidths=(0.5, 1, 1.5, 2),
+                               colors=colors, linestyle='solid')
 ax.add_collection(line_segments)
-ax.set_title("Line collection with masked arrays")
+ax.set_title('Line collection with masked arrays')
 plt.show()
 
 ###############################################################################
@@ -73,16 +73,14 @@ ax.set_ylim(np.min(ys), np.max(ys))
 # See `matplotlib.collections.LineCollection` for more information
 
 # Make a sequence of (x, y) pairs.
-line_segments = LineCollection(
-    [np.column_stack([x, y]) for y in ys],
-    linewidths=(0.5, 1, 1.5, 2),
-    linestyles="solid",
-)
+line_segments = LineCollection([np.column_stack([x, y]) for y in ys],
+                               linewidths=(0.5, 1, 1.5, 2),
+                               linestyles='solid')
 line_segments.set_array(x)
 ax.add_collection(line_segments)
 axcb = fig.colorbar(line_segments)
-axcb.set_label("Line Number")
-ax.set_title("Line Collection with mapped colors")
+axcb.set_label('Line Number')
+ax.set_title('Line Collection with mapped colors')
 plt.sci(line_segments)  # This allows interactive changing of the colormap.
 plt.show()
 
@@ -97,7 +95,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.collections
 matplotlib.collections.LineCollection
 matplotlib.cm.ScalarMappable.set_array

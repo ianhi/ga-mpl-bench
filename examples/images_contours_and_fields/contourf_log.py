@@ -20,8 +20,8 @@ X, Y = np.meshgrid(x, y)
 # A low hump with a spike coming out.
 # Needs to have z/colour axis on a log scale so we see both hump and spike.
 # linear scale only shows the spike.
-Z1 = np.exp(-(X ** 2) - Y ** 2)
-Z2 = np.exp(-((X * 10) ** 2) - (Y * 10) ** 2)
+Z1 = np.exp(-X**2 - Y**2)
+Z2 = np.exp(-(X * 10)**2 - (Y * 10)**2)
 z = Z1 + 50 * Z2
 
 # Put in some negative values (lower left corner) to cause trouble with logs:
@@ -59,7 +59,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.contourf
 matplotlib.pyplot.contourf
 matplotlib.figure.Figure.colorbar

@@ -19,15 +19,11 @@ import numpy as np
 ###############################################################################
 # Example 1
 
-x = np.arange(0, 1, 0.01)
+x = np.arange(0, 1, .01)
 fig, [[ax1, ax2], [ax3, ax4]] = plt.subplots(2, 2, figsize=(6, 6))
-fig.text(
-    0.5,
-    0.975,
-    "Default settings",
-    horizontalalignment="center",
-    verticalalignment="top",
-)
+fig.text(0.5, 0.975, 'Default settings',
+         horizontalalignment='center',
+         verticalalignment='top')
 
 ax1.plot(x * 1e5 + 1e10, x * 1e-10 + 1e-5)
 
@@ -42,15 +38,11 @@ fig.subplots_adjust(wspace=0.7, hspace=0.6)
 ###############################################################################
 # Example 2
 
-x = np.arange(0, 1, 0.01)
+x = np.arange(0, 1, .01)
 fig, [[ax1, ax2], [ax3, ax4]] = plt.subplots(2, 2, figsize=(6, 6))
-fig.text(
-    0.5,
-    0.975,
-    "No numerical offset",
-    horizontalalignment="center",
-    verticalalignment="top",
-)
+fig.text(0.5, 0.975, 'No numerical offset',
+         horizontalalignment='center',
+         verticalalignment='top')
 
 ax1.plot(x * 1e5 + 1e10, x * 1e-10 + 1e-5)
 ax1.ticklabel_format(useOffset=False)
@@ -69,11 +61,11 @@ fig.subplots_adjust(wspace=0.7, hspace=0.6)
 ###############################################################################
 # Example 3
 
-x = np.arange(0, 1, 0.01)
+x = np.arange(0, 1, .01)
 fig, [[ax1, ax2], [ax3, ax4]] = plt.subplots(2, 2, figsize=(6, 6))
-fig.text(
-    0.5, 0.975, "With mathtext", horizontalalignment="center", verticalalignment="top"
-)
+fig.text(0.5, 0.975, 'With mathtext',
+         horizontalalignment='center',
+         verticalalignment='top')
 
 ax1.plot(x * 1e5 + 1e10, x * 1e-10 + 1e-5)
 ax1.ticklabel_format(useMathText=True)

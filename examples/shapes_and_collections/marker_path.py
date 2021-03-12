@@ -18,7 +18,7 @@ codes = np.concatenate([circle.codes, star.codes])
 cut_star = mpath.Path(verts, codes)
 
 
-plt.plot(np.arange(10) ** 2, "--r", marker=cut_star, markersize=15)
+plt.plot(np.arange(10)**2, '--r', marker=cut_star, markersize=15)
 
 plt.show()
 
@@ -33,7 +33,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.path
 matplotlib.path.Path
 matplotlib.path.Path.unit_regular_star

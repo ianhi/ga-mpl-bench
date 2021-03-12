@@ -14,11 +14,10 @@ along the axis:
 
 import matplotlib.pyplot as plt
 import numpy as np
-
 np.random.seed(19680801)
 
 fig, ax = plt.subplots()
-dots = np.arange(10) / 100.0 + 0.03
+dots = np.arange(10) / 100. + .03
 x, y = np.meshgrid(dots, dots)
 data = [x.ravel(), y.ravel()]
 ax.scatter(*data, c=data[1])
@@ -28,10 +27,10 @@ ax.scatter(*data, c=data[1])
 # If you'd like Matplotlib to keep ticks located at round numbers, you can
 # change this behavior with the following rcParams value:
 
-print(plt.rcParams["axes.autolimit_mode"])
+print(plt.rcParams['axes.autolimit_mode'])
 
 # Now change this value and see the results
-with plt.rc_context({"axes.autolimit_mode": "round_numbers"}):
+with plt.rc_context({'axes.autolimit_mode': 'round_numbers'}):
     fig, ax = plt.subplots()
     ax.scatter(*data, c=data[1])
 
@@ -39,9 +38,9 @@ with plt.rc_context({"axes.autolimit_mode": "round_numbers"}):
 # You can also alter the margins of the axes around the data by
 # with ``axes.(x,y)margin``:
 
-with plt.rc_context(
-    {"axes.autolimit_mode": "round_numbers", "axes.xmargin": 0.8, "axes.ymargin": 0.8}
-):
+with plt.rc_context({'axes.autolimit_mode': 'round_numbers',
+                     'axes.xmargin': .8,
+                     'axes.ymargin': .8}):
     fig, ax = plt.subplots()
     ax.scatter(*data, c=data[1])
 

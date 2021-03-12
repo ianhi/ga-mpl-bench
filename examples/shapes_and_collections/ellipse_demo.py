@@ -17,17 +17,12 @@ np.random.seed(19680801)
 
 NUM = 250
 
-ells = [
-    Ellipse(
-        xy=np.random.rand(2) * 10,
-        width=np.random.rand(),
-        height=np.random.rand(),
-        angle=np.random.rand() * 360,
-    )
-    for i in range(NUM)
-]
+ells = [Ellipse(xy=np.random.rand(2) * 10,
+                width=np.random.rand(), height=np.random.rand(),
+                angle=np.random.rand() * 360)
+        for i in range(NUM)]
 
-fig, ax = plt.subplots(subplot_kw={"aspect": "equal"})
+fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
 for e in ells:
     ax.add_artist(e)
     e.set_clip_box(ax.bbox)
@@ -52,16 +47,16 @@ import numpy as np
 from matplotlib.patches import Ellipse
 
 angle_step = 45  # degrees
-angles = np.arange(0, 180, angle_step)
+angles = np.arange(0, 360, angle_step)
 
-fig, ax = plt.subplots(subplot_kw={"aspect": "equal"})
+ax = plt.subplot(aspect='equal')
 
 for angle in angles:
     ellipse = Ellipse((0, 0), 4, 2, angle=angle, alpha=0.1)
     ax.add_artist(ellipse)
 
-ax.set_xlim(-2.2, 2.2)
-ax.set_ylim(-2.2, 2.2)
+plt.xlim(-2.2, 2.2)
+plt.ylim(-2.2, 2.2)
 
 plt.show()
 
@@ -76,7 +71,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.patches
 matplotlib.patches.Ellipse
 matplotlib.axes.Axes.add_artist

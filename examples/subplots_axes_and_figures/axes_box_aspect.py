@@ -85,7 +85,7 @@ im = np.random.rand(16, 27)
 ax.imshow(im)
 
 ax2.plot([23, 45])
-ax2.set_box_aspect(im.shape[0] / im.shape[1])
+ax2.set_box_aspect(im.shape[0]/im.shape[1])
 
 plt.show()
 
@@ -99,20 +99,16 @@ plt.show()
 # This ensures that all axes align perfectly, independent on the size of the
 # figure.
 
-fig5, axs = plt.subplots(
-    2,
-    2,
-    sharex="col",
-    sharey="row",
-    gridspec_kw=dict(height_ratios=[1, 3], width_ratios=[3, 1]),
-)
+fig5, axs = plt.subplots(2, 2, sharex="col", sharey="row",
+                         gridspec_kw=dict(height_ratios=[1, 3],
+                                          width_ratios=[3, 1]))
 axs[0, 1].set_visible(False)
-axs[0, 0].set_box_aspect(1 / 3)
+axs[0, 0].set_box_aspect(1/3)
 axs[1, 0].set_box_aspect(1)
-axs[1, 1].set_box_aspect(3 / 1)
+axs[1, 1].set_box_aspect(3/1)
 
 np.random.seed(19680801)  # Fixing random state for reproducibility
-x, y = np.random.randn(2, 400) * [[0.5], [180]]
+x, y = np.random.randn(2, 400) * [[.5], [180]]
 axs[1, 0].scatter(x, y)
 axs[0, 0].hist(x)
 axs[1, 1].hist(y, orientation="horizontal")
@@ -143,17 +139,11 @@ plt.show()
 # It is possible to pass the box aspect to an axes at initialization. The
 # following creates a 2 by 3 subplot grid with all square axes.
 
-fig7, axs = plt.subplots(
-    2,
-    3,
-    subplot_kw=dict(box_aspect=1),
-    sharex=True,
-    sharey=True,
-    constrained_layout=True,
-)
+fig7, axs = plt.subplots(2, 3, subplot_kw=dict(box_aspect=1),
+                         sharex=True, sharey=True, constrained_layout=True)
 
 for i, ax in enumerate(axs.flat):
-    ax.scatter(i % 3, -((i // 3) - 0.5) * 200, c=[plt.cm.hsv(i / 6)], s=300)
+    ax.scatter(i % 3, -((i // 3) - 0.5)*200, c=[plt.cm.hsv(i / 6)], s=300)
 plt.show()
 
 #############################################################################

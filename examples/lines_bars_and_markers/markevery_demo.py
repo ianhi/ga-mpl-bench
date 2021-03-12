@@ -23,19 +23,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # define a list of markevery cases to plot
-cases = [
-    None,
-    8,
-    (30, 8),
-    [16, 24, 30],
-    [0, -1],
-    slice(100, 200, 3),
-    0.1,
-    0.3,
-    1.5,
-    (0.0, 0.1),
-    (0.45, 0.1),
-]
+cases = [None,
+         8,
+         (30, 8),
+         [16, 24, 30], [0, -1],
+         slice(100, 200, 3),
+         0.1, 0.3, 1.5,
+         (0.0, 0.1), (0.45, 0.1)]
 
 # define the figure size and grid layout properties
 figsize = (10, 8)
@@ -56,15 +50,14 @@ def trim_axs(axs, N):
         ax.remove()
     return axs[:N]
 
-
 ###############################################################################
 # Plot each markevery case for linear x and y scales
 
 axs = plt.figure(figsize=figsize, constrained_layout=True).subplots(rows, cols)
 axs = trim_axs(axs, len(cases))
 for ax, case in zip(axs, cases):
-    ax.set_title("markevery=%s" % str(case))
-    ax.plot(x, y, "o", ls="-", ms=4, markevery=case)
+    ax.set_title('markevery=%s' % str(case))
+    ax.plot(x, y, 'o', ls='-', ms=4, markevery=case)
 
 ###############################################################################
 # Plot each markevery case for log x and y scales
@@ -72,10 +65,10 @@ for ax, case in zip(axs, cases):
 axs = plt.figure(figsize=figsize, constrained_layout=True).subplots(rows, cols)
 axs = trim_axs(axs, len(cases))
 for ax, case in zip(axs, cases):
-    ax.set_title("markevery=%s" % str(case))
-    ax.set_xscale("log")
-    ax.set_yscale("log")
-    ax.plot(x, y, "o", ls="-", ms=4, markevery=case)
+    ax.set_title('markevery=%s' % str(case))
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.plot(x, y, 'o', ls='-', ms=4, markevery=case)
 
 ###############################################################################
 # Plot each markevery case for linear x and y scales but zoomed in
@@ -86,8 +79,8 @@ for ax, case in zip(axs, cases):
 axs = plt.figure(figsize=figsize, constrained_layout=True).subplots(rows, cols)
 axs = trim_axs(axs, len(cases))
 for ax, case in zip(axs, cases):
-    ax.set_title("markevery=%s" % str(case))
-    ax.plot(x, y, "o", ls="-", ms=4, markevery=case)
+    ax.set_title('markevery=%s' % str(case))
+    ax.plot(x, y, 'o', ls='-', ms=4, markevery=case)
     ax.set_xlim((6, 6.7))
     ax.set_ylim((1.1, 1.7))
 
@@ -99,11 +92,10 @@ theta = 2 * np.pi * r
 # Plot each markevery case for polar plots
 
 axs = plt.figure(figsize=figsize, constrained_layout=True).subplots(
-    rows, cols, subplot_kw={"projection": "polar"}
-)
+    rows, cols, subplot_kw={'projection': 'polar'})
 axs = trim_axs(axs, len(cases))
 for ax, case in zip(axs, cases):
-    ax.set_title("markevery=%s" % str(case))
-    ax.plot(theta, r, "o", ls="-", ms=4, markevery=case)
+    ax.set_title('markevery=%s' % str(case))
+    ax.plot(theta, r, 'o', ls='-', ms=4, markevery=case)
 
 plt.show()

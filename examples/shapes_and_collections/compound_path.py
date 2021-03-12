@@ -15,19 +15,19 @@ import matplotlib.pyplot as plt
 vertices = []
 codes = []
 
-codes = [Path.MOVETO] + [Path.LINETO] * 3 + [Path.CLOSEPOLY]
+codes = [Path.MOVETO] + [Path.LINETO]*3 + [Path.CLOSEPOLY]
 vertices = [(1, 1), (1, 2), (2, 2), (2, 1), (0, 0)]
 
-codes += [Path.MOVETO] + [Path.LINETO] * 2 + [Path.CLOSEPOLY]
+codes += [Path.MOVETO] + [Path.LINETO]*2 + [Path.CLOSEPOLY]
 vertices += [(4, 4), (5, 5), (5, 4), (0, 0)]
 
 path = Path(vertices, codes)
 
-pathpatch = PathPatch(path, facecolor="None", edgecolor="green")
+pathpatch = PathPatch(path, facecolor='None', edgecolor='green')
 
 fig, ax = plt.subplots()
 ax.add_patch(pathpatch)
-ax.set_title("A compound path")
+ax.set_title('A compound path')
 
 ax.autoscale_view()
 
@@ -44,7 +44,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.path
 matplotlib.path.Path
 matplotlib.patches

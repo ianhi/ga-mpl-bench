@@ -22,9 +22,8 @@ ax.tick_params(grid_color="palegoldenrod")
 # snippet places the legend's lower left corner just outside of the polar axes
 # at an angle of 67.5 degrees in polar coordinates.
 angle = np.deg2rad(67.5)
-ax.legend(
-    loc="lower left", bbox_to_anchor=(0.5 + np.cos(angle) / 2, 0.5 + np.sin(angle) / 2)
-)
+ax.legend(loc="lower left",
+          bbox_to_anchor=(.5 + np.cos(angle)/2, .5 + np.sin(angle)/2))
 
 plt.show()
 
@@ -39,7 +38,6 @@ plt.show()
 # in this example:
 
 import matplotlib
-
 matplotlib.axes.Axes.plot
 matplotlib.axes.Axes.legend
 matplotlib.projections.polar

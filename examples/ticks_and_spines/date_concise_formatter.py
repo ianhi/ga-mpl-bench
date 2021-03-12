@@ -30,23 +30,21 @@ np.random.seed(19680801)
 y = np.cumsum(np.random.randn(N))
 
 fig, axs = plt.subplots(3, 1, constrained_layout=True, figsize=(6, 6))
-lims = [
-    (np.datetime64("2005-02"), np.datetime64("2005-04")),
-    (np.datetime64("2005-02-03"), np.datetime64("2005-02-15")),
-    (np.datetime64("2005-02-03 11:00"), np.datetime64("2005-02-04 13:20")),
-]
+lims = [(np.datetime64('2005-02'), np.datetime64('2005-04')),
+        (np.datetime64('2005-02-03'), np.datetime64('2005-02-15')),
+        (np.datetime64('2005-02-03 11:00'), np.datetime64('2005-02-04 13:20'))]
 for nn, ax in enumerate(axs):
     ax.plot(dates, y)
     ax.set_xlim(lims[nn])
     # rotate_labels...
     for label in ax.get_xticklabels():
         label.set_rotation(40)
-        label.set_horizontalalignment("right")
-axs[0].set_title("Default Date Formatter")
+        label.set_horizontalalignment('right')
+axs[0].set_title('Default Date Formatter')
 plt.show()
 
 #############################################################################
-# The default date formatter is quite verbose, so we have the option of
+# The default date formater is quite verbose, so we have the option of
 # using `~.dates.ConciseDateFormatter`, as shown below.  Note that
 # for this example the labels do not need to be rotated as they do for the
 # default formatter because the labels are as small as possible.
@@ -60,7 +58,7 @@ for nn, ax in enumerate(axs):
 
     ax.plot(dates, y)
     ax.set_xlim(lims[nn])
-axs[0].set_title("Concise Date Formatter")
+axs[0].set_title('Concise Date Formatter')
 
 plt.show()
 
@@ -70,7 +68,6 @@ plt.show()
 # imports:
 
 import matplotlib.units as munits
-
 converter = mdates.ConciseDateConverter()
 munits.registry[np.datetime64] = converter
 munits.registry[datetime.date] = converter
@@ -80,7 +77,7 @@ fig, axs = plt.subplots(3, 1, figsize=(6, 6), constrained_layout=True)
 for nn, ax in enumerate(axs):
     ax.plot(dates, y)
     ax.set_xlim(lims[nn])
-axs[0].set_title("Concise Date Formatter")
+axs[0].set_title('Concise Date Formatter')
 
 plt.show()
 
@@ -114,34 +111,30 @@ fig, axs = plt.subplots(3, 1, constrained_layout=True, figsize=(6, 6))
 for nn, ax in enumerate(axs):
     locator = mdates.AutoDateLocator()
     formatter = mdates.ConciseDateFormatter(locator)
-    formatter.formats = [
-        "%y",  # ticks are mostly years
-        "%b",  # ticks are mostly months
-        "%d",  # ticks are mostly days
-        "%H:%M",  # hrs
-        "%H:%M",  # min
-        "%S.%f",
-    ]  # secs
+    formatter.formats = ['%y',  # ticks are mostly years
+                         '%b',       # ticks are mostly months
+                         '%d',       # ticks are mostly days
+                         '%H:%M',    # hrs
+                         '%H:%M',    # min
+                         '%S.%f', ]  # secs
     # these are mostly just the level above...
-    formatter.zero_formats = [""] + formatter.formats[:-1]
+    formatter.zero_formats = [''] + formatter.formats[:-1]
     # ...except for ticks that are mostly hours, then it is nice to have
     # month-day:
-    formatter.zero_formats[3] = "%d-%b"
+    formatter.zero_formats[3] = '%d-%b'
 
-    formatter.offset_formats = [
-        "",
-        "%Y",
-        "%b %Y",
-        "%d %b %Y",
-        "%d %b %Y",
-        "%d %b %Y %H:%M",
-    ]
+    formatter.offset_formats = ['',
+                                '%Y',
+                                '%b %Y',
+                                '%d %b %Y',
+                                '%d %b %Y',
+                                '%d %b %Y %H:%M', ]
     ax.xaxis.set_major_locator(locator)
     ax.xaxis.set_major_formatter(formatter)
 
     ax.plot(dates, y)
     ax.set_xlim(lims[nn])
-axs[0].set_title("Concise Date Formatter")
+axs[0].set_title('Concise Date Formatter')
 
 plt.show()
 
@@ -155,30 +148,25 @@ plt.show()
 
 import datetime
 
-formats = [
-    "%y",  # ticks are mostly years
-    "%b",  # ticks are mostly months
-    "%d",  # ticks are mostly days
-    "%H:%M",  # hrs
-    "%H:%M",  # min
-    "%S.%f",
-]  # secs
+formats = ['%y',          # ticks are mostly years
+           '%b',     # ticks are mostly months
+           '%d',     # ticks are mostly days
+           '%H:%M',  # hrs
+           '%H:%M',  # min
+           '%S.%f', ]  # secs
 # these can be the same, except offset by one level....
-zero_formats = [""] + formats[:-1]
+zero_formats = [''] + formats[:-1]
 # ...except for ticks that are mostly hours, then its nice to have month-day
-zero_formats[3] = "%d-%b"
-offset_formats = [
-    "",
-    "%Y",
-    "%b %Y",
-    "%d %b %Y",
-    "%d %b %Y",
-    "%d %b %Y %H:%M",
-]
+zero_formats[3] = '%d-%b'
+offset_formats = ['',
+                  '%Y',
+                  '%b %Y',
+                  '%d %b %Y',
+                  '%d %b %Y',
+                  '%d %b %Y %H:%M', ]
 
 converter = mdates.ConciseDateConverter(
-    formats=formats, zero_formats=zero_formats, offset_formats=offset_formats
-)
+    formats=formats, zero_formats=zero_formats, offset_formats=offset_formats)
 
 munits.registry[np.datetime64] = converter
 munits.registry[datetime.date] = converter
@@ -188,6 +176,6 @@ fig, axs = plt.subplots(3, 1, constrained_layout=True, figsize=(6, 6))
 for nn, ax in enumerate(axs):
     ax.plot(dates, y)
     ax.set_xlim(lims[nn])
-axs[0].set_title("Concise Date Formatter registered non-default")
+axs[0].set_title('Concise Date Formatter registered non-default')
 
 plt.show()

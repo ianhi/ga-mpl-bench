@@ -30,13 +30,11 @@ class GeoAxes(Axes):
     """
     An abstract base class for geographic projections
     """
-
     class ThetaFormatter(Formatter):
         """
         Used to format the theta tick labels.  Converts the native
         unit of radians into degrees and adds a degree symbol.
         """
-
         def __init__(self, round_to=1.0):
             self._round_to = round_to
 
@@ -50,25 +48,25 @@ class GeoAxes(Axes):
         self.xaxis = maxis.XAxis(self)
         self.yaxis = maxis.YAxis(self)
         # Do not register xaxis or yaxis with spines -- as done in
-        # Axes._init_axis() -- until GeoAxes.xaxis.clear() works.
+        # Axes._init_axis() -- until GeoAxes.xaxis.cla() works.
         # self.spines['geo'].register_axis(self.yaxis)
         self._update_transScale()
 
     def cla(self):
-        super().cla()
+        Axes.cla(self)
 
         self.set_longitude_grid(30)
         self.set_latitude_grid(15)
         self.set_longitude_grid_ends(75)
         self.xaxis.set_minor_locator(NullLocator())
         self.yaxis.set_minor_locator(NullLocator())
-        self.xaxis.set_ticks_position("none")
-        self.yaxis.set_ticks_position("none")
+        self.xaxis.set_ticks_position('none')
+        self.yaxis.set_ticks_position('none')
         self.yaxis.set_tick_params(label1On=True)
         # Why do we need to turn on yaxis tick labels, but
         # xaxis tick labels are already on?
 
-        self.grid(rcParams["axes.grid"])
+        self.grid(rcParams['axes.grid'])
 
         Axes.set_xlim(self, -np.pi, np.pi)
         Axes.set_ylim(self, -np.pi / 2.0, np.pi / 2.0)
@@ -78,13 +76,13 @@ class GeoAxes(Axes):
 
         # There are three important coordinate spaces going on here:
         #
-        # 1. Data space: The space of the data itself
+        #    1. Data space: The space of the data itself
         #
-        # 2. Axes space: The unit rectangle (0, 0) to (1, 1)
-        #    covering the entire plot area.
+        #    2. Axes space: The unit rectangle (0, 0) to (1, 1)
+        #       covering the entire plot area.
         #
-        # 3. Display space: The coordinates of the resulting image,
-        #    often in pixels or dpi/inch.
+        #    3. Display space: The coordinates of the resulting image,
+        #       often in pixels or dpi/inch.
 
         # This function makes heavy use of the Transform classes in
         # ``lib/matplotlib/transforms.py.`` For more information, see
@@ -117,7 +115,10 @@ class GeoAxes(Axes):
         # transforms will be applied "in order".  The transforms are
         # automatically simplified, if possible, by the underlying
         # transformation framework.
-        self.transData = self.transProjection + self.transAffine + self.transAxes
+        self.transData = \
+            self.transProjection + \
+            self.transAffine + \
+            self.transAxes
 
         # The main data transformation is set up.  Now deal with
         # gridlines and tick labels.
@@ -128,20 +129,21 @@ class GeoAxes(Axes):
         # (xmax, 1).  The goal of these transforms is to go from that
         # space to display space.  The tick labels will be offset 4
         # pixels from the equator.
-        self._xaxis_pretransform = (
-            Affine2D()
-            .scale(1.0, self._longitude_cap * 2.0)
+        self._xaxis_pretransform = \
+            Affine2D() \
+            .scale(1.0, self._longitude_cap * 2.0) \
             .translate(0.0, -self._longitude_cap)
-        )
-        self._xaxis_transform = self._xaxis_pretransform + self.transData
-        self._xaxis_text1_transform = (
-            Affine2D().scale(1.0, 0.0) + self.transData + Affine2D().translate(0.0, 4.0)
-        )
-        self._xaxis_text2_transform = (
-            Affine2D().scale(1.0, 0.0)
-            + self.transData
-            + Affine2D().translate(0.0, -4.0)
-        )
+        self._xaxis_transform = \
+            self._xaxis_pretransform + \
+            self.transData
+        self._xaxis_text1_transform = \
+            Affine2D().scale(1.0, 0.0) + \
+            self.transData + \
+            Affine2D().translate(0.0, 4.0)
+        self._xaxis_text2_transform = \
+            Affine2D().scale(1.0, 0.0) + \
+            self.transData + \
+            Affine2D().translate(0.0, -4.0)
 
         # Now set up the transforms for the latitude ticks.  The input to
         # these transforms are in axes space in x and display space in
@@ -149,36 +151,46 @@ class GeoAxes(Axes):
         # (1, ymax).  The goal of these transforms is to go from that
         # space to display space.  The tick labels will be offset 4
         # pixels from the edge of the axes ellipse.
-        yaxis_stretch = Affine2D().scale(np.pi * 2, 1).translate(-np.pi, 0)
+        yaxis_stretch = Affine2D().scale(np.pi*2, 1).translate(-np.pi, 0)
         yaxis_space = Affine2D().scale(1.0, 1.1)
-        self._yaxis_transform = yaxis_stretch + self.transData
-        yaxis_text_base = (
-            yaxis_stretch
-            + self.transProjection
-            + (yaxis_space + self.transAffine + self.transAxes)
-        )
-        self._yaxis_text1_transform = yaxis_text_base + Affine2D().translate(-8.0, 0.0)
-        self._yaxis_text2_transform = yaxis_text_base + Affine2D().translate(8.0, 0.0)
+        self._yaxis_transform = \
+            yaxis_stretch + \
+            self.transData
+        yaxis_text_base = \
+            yaxis_stretch + \
+            self.transProjection + \
+            (yaxis_space +
+             self.transAffine +
+             self.transAxes)
+        self._yaxis_text1_transform = \
+            yaxis_text_base + \
+            Affine2D().translate(-8.0, 0.0)
+        self._yaxis_text2_transform = \
+            yaxis_text_base + \
+            Affine2D().translate(8.0, 0.0)
 
     def _get_affine_transform(self):
         transform = self._get_core_transform(1)
         xscale, _ = transform.transform((np.pi, 0))
-        _, yscale = transform.transform((0, np.pi / 2))
-        return Affine2D().scale(0.5 / xscale, 0.5 / yscale).translate(0.5, 0.5)
+        _, yscale = transform.transform((0, np.pi/2))
+        return Affine2D() \
+            .scale(0.5 / xscale, 0.5 / yscale) \
+            .translate(0.5, 0.5)
 
-    def get_xaxis_transform(self, which="grid"):
+    def get_xaxis_transform(self, which='grid'):
         """
         Override this method to provide a transformation for the
         x-axis tick labels.
 
         Returns a tuple of the form (transform, valign, halign)
         """
-        if which not in ["tick1", "tick2", "grid"]:
-            raise ValueError("'which' must be one of 'tick1', 'tick2', or 'grid'")
+        if which not in ['tick1', 'tick2', 'grid']:
+            raise ValueError(
+                "'which' must be one of 'tick1', 'tick2', or 'grid'")
         return self._xaxis_transform
 
     def get_xaxis_text1_transform(self, pad):
-        return self._xaxis_text1_transform, "bottom", "center"
+        return self._xaxis_text1_transform, 'bottom', 'center'
 
     def get_xaxis_text2_transform(self, pad):
         """
@@ -187,15 +199,16 @@ class GeoAxes(Axes):
 
         Returns a tuple of the form (transform, valign, halign)
         """
-        return self._xaxis_text2_transform, "top", "center"
+        return self._xaxis_text2_transform, 'top', 'center'
 
-    def get_yaxis_transform(self, which="grid"):
+    def get_yaxis_transform(self, which='grid'):
         """
         Override this method to provide a transformation for the
         y-axis grid and ticks.
         """
-        if which not in ["tick1", "tick2", "grid"]:
-            raise ValueError("'which' must be one of 'tick1', 'tick2', or 'grid'")
+        if which not in ['tick1', 'tick2', 'grid']:
+            raise ValueError(
+                "'which' must be one of 'tick1', 'tick2', or 'grid'")
         return self._yaxis_transform
 
     def get_yaxis_text1_transform(self, pad):
@@ -205,7 +218,7 @@ class GeoAxes(Axes):
 
         Returns a tuple of the form (transform, valign, halign)
         """
-        return self._yaxis_text1_transform, "center", "right"
+        return self._yaxis_text1_transform, 'center', 'right'
 
     def get_yaxis_text2_transform(self, pad):
         """
@@ -214,7 +227,7 @@ class GeoAxes(Axes):
 
         Returns a tuple of the form (transform, valign, halign)
         """
-        return self._yaxis_text2_transform, "center", "left"
+        return self._yaxis_text2_transform, 'center', 'left'
 
     def _gen_axes_patch(self):
         """
@@ -228,10 +241,10 @@ class GeoAxes(Axes):
         return Circle((0.5, 0.5), 0.5)
 
     def _gen_axes_spines(self):
-        return {"geo": mspines.Spine.circular_spine(self, (0.5, 0.5), 0.5)}
+        return {'geo': mspines.Spine.circular_spine(self, (0.5, 0.5), 0.5)}
 
     def set_yscale(self, *args, **kwargs):
-        if args[0] != "linear":
+        if args[0] != 'linear':
             raise NotImplementedError
 
     # Prevent the user from applying scales to one or both of the
@@ -244,10 +257,8 @@ class GeoAxes(Axes):
     # set_xlim and set_ylim to ignore any input.  This also applies to
     # interactive panning and zooming in the GUI interfaces.
     def set_xlim(self, *args, **kwargs):
-        raise TypeError(
-            "Changing axes limits of a geographic projection is "
-            "not supported.  Please consider using Cartopy."
-        )
+        raise TypeError("Changing axes limits of a geographic projection is "
+                        "not supported.  Please consider using Cartopy.")
 
     set_ylim = set_xlim
 
@@ -260,14 +271,15 @@ class GeoAxes(Axes):
         """
         lon, lat = np.rad2deg([lon, lat])
         if lat >= 0.0:
-            ns = "N"
+            ns = 'N'
         else:
-            ns = "S"
+            ns = 'S'
         if lon >= 0.0:
-            ew = "E"
+            ew = 'E'
         else:
-            ew = "W"
-        return "%f\N{DEGREE SIGN}%s, %f\N{DEGREE SIGN}%s" % (abs(lat), ns, abs(lon), ew)
+            ew = 'W'
+        return ('%f\N{DEGREE SIGN}%s, %f\N{DEGREE SIGN}%s'
+                % (abs(lat), ns, abs(lon), ew))
 
     def set_longitude_grid(self, degrees):
         """
@@ -308,9 +320,10 @@ class GeoAxes(Axes):
         analogy in the base Axes class.
         """
         self._longitude_cap = np.deg2rad(degrees)
-        self._xaxis_pretransform.clear().scale(
-            1.0, self._longitude_cap * 2.0
-        ).translate(0.0, -self._longitude_cap)
+        self._xaxis_pretransform \
+            .clear() \
+            .scale(1.0, self._longitude_cap * 2.0) \
+            .translate(0.0, -self._longitude_cap)
 
     def get_data_ratio(self):
         """
@@ -325,16 +338,14 @@ class GeoAxes(Axes):
     # so we override all of the following methods to disable it.
     def can_zoom(self):
         """
-        Return whether this axes supports the zoom box button functionality.
-
+        Return *True* if this axes supports the zoom box button functionality.
         This axes object does not support interactive zoom box.
         """
         return False
 
     def can_pan(self):
         """
-        Return whether this axes supports the pan/zoom button functionality.
-
+        Return *True* if this axes supports the pan/zoom button functionality.
         This axes object does not support interactive pan/zoom.
         """
         return False
@@ -359,12 +370,11 @@ class HammerAxes(GeoAxes):
 
     # The projection must specify a name. This will be used by the
     # user to select the projection,
-    # i.e. ``subplot(projection='custom_hammer')``.
-    name = "custom_hammer"
+    # i.e. ``subplot(111, projection='custom_hammer')``.
+    name = 'custom_hammer'
 
     class HammerTransform(Transform):
         """The base Hammer transform."""
-
         input_dims = output_dims = 2
 
         def __init__(self, resolution):
@@ -408,7 +418,7 @@ class HammerAxes(GeoAxes):
             x, y = xy.T
             z = np.sqrt(1 - (x / 4) ** 2 - (y / 2) ** 2)
             longitude = 2 * np.arctan((z * x) / (2 * (2 * z ** 2 - 1)))
-            latitude = np.arcsin(y * z)
+            latitude = np.arcsin(y*z)
             return np.column_stack([longitude, latitude])
 
         def inverted(self):
@@ -416,8 +426,8 @@ class HammerAxes(GeoAxes):
 
     def __init__(self, *args, **kwargs):
         self._longitude_cap = np.pi / 2.0
-        super().__init__(*args, **kwargs)
-        self.set_aspect(0.5, adjustable="box", anchor="C")
+        GeoAxes.__init__(self, *args, **kwargs)
+        self.set_aspect(0.5, adjustable='box', anchor='C')
         self.cla()
 
     def _get_core_transform(self, resolution):
@@ -428,12 +438,11 @@ class HammerAxes(GeoAxes):
 register_projection(HammerAxes)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import matplotlib.pyplot as plt
-
     # Now make a simple example using the custom projection.
-    fig, ax = plt.subplots(subplot_kw={"projection": "custom_hammer"})
-    ax.plot([-1, 1, 1], [-1, -1, 1], "o-")
-    ax.grid()
+    plt.subplot(111, projection="custom_hammer")
+    p = plt.plot([-1, 1, 1], [-1, -1, 1], "o-")
+    plt.grid(True)
 
     plt.show()
