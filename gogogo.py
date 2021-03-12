@@ -19,9 +19,13 @@ import time as _time # apparently at least one example redefines this
 
 files = glob.glob("examples/**/*.py")
 times = []
+garbo = []
 for f in files:
     start = _time.time()
-    exec(open(f).read())
+    try:
+        exec(open(f).read())
+    except:
+        garbo.append(f)
     end = _time.time()
     times.append(end - start)
     plt.close("all")
@@ -40,3 +44,4 @@ with open(now, "w") as f:
     for fname, time in zip(files, times):
         f.write(f"{fname}, {time}\n")
 
+print(garbo)
