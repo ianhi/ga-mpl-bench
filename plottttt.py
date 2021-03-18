@@ -26,6 +26,7 @@ ax.plot(times / means, **style)
 ax.set_title('Time normalized by mean time')
 ax.set_xlabel('Run number')
 ax.set_ylabel('Relative Time')
+plt.show()
 
 
 # # most and least consistent
